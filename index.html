@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defender Settings Redesign — WPMU DEV Style Wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page-bg: #E5E5E5;
+    --card-bg: #FFFFFF;
+    --border: #E6E6E6;
+    --border-light: #F2F2F2;
+    --text-dark: #333333;
+    --text-mid: #666666;
+    --text-light: #888888;
+    --text-muted: #AAAAAA;
+    --blue: #286EFA;
+    --blue-bg: #F0F6FF;
+    --green: #1ABC9C;
+    --orange: #FF6D00;
+    --purple: #8D00B1;
+    --purple-bg: #F3EEFF;
+    --red: #FF6B6B;
+    --sidebar-width: 240px;
+    --topbar-height: 60px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--page-bg);
+    color: var(--text-dark);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ===== SPEC PAGE WRAPPER ===== */
+  .spec-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+
+  /* ===== SPEC SECTIONS (Documentation above wireframe) ===== */
+  .spec-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .spec-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1A1A2E;
+    margin-bottom: 6px;
+  }
+  .spec-header p {
+    font-size: 14px;
+    color: var(--text-light);
+  }
+
+  .spec-section {
+    margin-bottom: 40px;
+  }
+  .spec-section > h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .spec-section > h3::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: var(--blue);
+    border-radius: 2px;
+  }
+  .rationale {
+    background: #FAFBFF;
+    border: 1px solid #E0E8FF;
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .rationale strong { color: var(--blue); }
+
+  /* IA Diagram */
+  .ia-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    background: white;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .ia-group {}
+  .ia-group-label {
+    background: var(--blue-bg);
+    border: 1px solid #D4E4FF;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .ia-item {
+    padding: 7px 12px;
+    background: #FAFAFA;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-blue { background: var(--blue); }
+  .dot-green { background: var(--green); }
+  .dot-orange { background: var(--orange); }
+  .dot-purple { background: var(--purple); }
+
+  /* Decision Table */
+  .decision-table {
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border-collapse: collapse;
+    overflow: hidden;
+  }
+  .decision-table th {
+    background: #FAFAFA;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: #555;
+    border-bottom: 2px solid var(--border);
+  }
+  .decision-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 13px;
+  }
+  .decision-table td:first-child { font-weight: 500; color: #333; }
+  .decision-table td:last-child { color: #666; }
+  .decision-table tr:last-child td { border-bottom: none; }
+
+  /* ================================================================ */
+  /* ===== THE WIREFRAME (Matching Smush Screenshot Exactly) ======= */
+  /* ================================================================ */
+
+  /* Breadcrumb above the card */
+  .breadcrumb {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+  .breadcrumb span { color: var(--text-dark); font-weight: 400; }
+
+  /* White Settings Card */
+  .settings-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    display: flex;
+    overflow: hidden;
+    min-height: 640px;
+  }
+
+  /* ===== LEFT SIDEBAR inside card ===== */
+  .sidebar {
+    width: var(--sidebar-width);
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Sidebar Tabs */
+  .sidebar .section-label {
+    padding: 18px 20px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+  }
+  .sidebar .section-label:first-child {
+    padding-top: 14px;
+  }
+
+  .sidebar .tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 20px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-mid);
+    border-left: 3px solid transparent;
+    transition: all 0.12s;
+    user-select: none;
+    position: relative;
+  }
+  .sidebar .tab:hover {
+    background: #FAFAFA;
+    color: var(--text-dark);
+  }
+  .sidebar .tab.active {
+    background: var(--blue-bg);
+    color: var(--blue);
+    border-left-color: var(--blue);
+    font-weight: 500;
+  }
+  .sidebar .tab svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: currentColor;
+    opacity: 0.6;
+  }
+  .sidebar .tab.active svg { opacity: 1; }
+
+  .badge-new {
+    background: var(--orange);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: auto;
+    letter-spacing: 0.3px;
+  }
+
+  .sidebar .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 6px 0;
+  }
+
+  /* Bottom area of sidebar - General/Configs */
+  .sidebar .bottom-section {
+    margin-top: auto;
+  }
+
+  /* ===== RIGHT CONTENT AREA ===== */
+  .content {
+    flex: 1;
+    padding: 28px 30px;
+    display: none;
+    overflow-y: auto;
+  }
+  .content.active { display: block; }
+
+  /* Two-column content layout (like Smush) */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 40px;
+  }
+  .content-col {}
+
+  /* Section title inside content */
+  .section-heading {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+  .section-heading:not(:first-child) {
+    margin-top: 28px;
+  }
+
+  /* Setting row */
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border-light);
+    min-height: 48px;
+  }
+  .row:last-child { border-bottom: none; }
+  .row-label {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .row-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+  .row-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Info icon (circle with ?) */
+  .i-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 1px solid #CCC;
+    font-size: 9px;
+    color: #AAA;
+    cursor: help;
+    flex-shrink: 0;
+    font-style: normal;
+  }
+
+  /* Toggle switch */
+  .toggle {
+    width: 36px; height: 20px;
+    background: #D5D5D5;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    width: 16px; height: 16px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px; left: 2px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  }
+  .toggle.on { background: var(--green); }
+  .toggle.on::after { transform: translateX(16px); }
+
+  /* Select dropdown */
+  .select {
+    padding: 6px 10px;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #333;
+    background: white;
+    outline: none;
+    min-width: 130px;
+  }
+
+  /* Text input */
+  .input {
+    padding: 6px 10px;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #333;
+    outline: none;
+    width: 100%;
+  }
+
+  /* Notice / Info box */
+  .notice {
+    padding: 11px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .notice-blue { background: #EEF4FF; color: #3B6FC0; border-left: 3px solid var(--blue); }
+  .notice-orange { background: #FFF6ED; color: #B35C00; border-left: 3px solid var(--orange); }
+  .notice-green { background: #EDFAF6; color: #148A6F; border-left: 3px solid var(--green); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.12s;
+  }
+  .btn-blue { background: var(--blue); color: white; }
+  .btn-blue:hover { background: #1F5FE0; }
+  .btn-outline { background: white; color: var(--blue); border: 1px solid var(--blue); }
+  .btn-ghost { background: white; color: #888; border: 1px solid #DDD; }
+  .btn-red { background: white; color: var(--red); border: 1px solid var(--red); }
+  .btn-restore { background: white; color: var(--red); border: 1px solid var(--red); display: inline-flex; align-items: center; gap: 4px; padding: 7px 14px; border-radius: 4px; font-size: 12px; cursor: pointer; }
+
+  /* Save bar */
+  .save-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 20px;
+    margin-top: 24px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .tag-pro { background: var(--purple-bg); color: var(--purple); }
+  .tag-green { background: #E8FAF5; color: #16A085; }
+
+  /* Role checkboxes */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .role-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+  .chk {
+    width: 15px; height: 15px;
+    border: 1.5px solid #CCC;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    flex-shrink: 0;
+    color: transparent;
+  }
+  .chk.on { background: var(--blue); border-color: var(--blue); color: white; }
+
+  /* Radio */
+  .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+  .radio-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #555; }
+  .radio {
+    width: 15px; height: 15px;
+    border: 1.5px solid #CCC;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .radio.on { border-color: var(--blue); }
+  .radio.on::after { content: ''; width: 7px; height: 7px; background: var(--blue); border-radius: 50%; }
+
+  /* Recipient row */
+  .recipient {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .recipient:last-of-type { border-bottom: none; }
+  .recipient-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .recipient-info { flex: 1; }
+  .recipient-name { font-size: 13px; font-weight: 500; }
+  .recipient-meta { font-size: 11px; color: #999; }
+
+  /* Config card */
+  .config-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .config-icon {
+    width: 36px; height: 36px;
+    background: var(--blue-bg);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .config-info { flex: 1; }
+  .config-name { font-size: 13px; font-weight: 500; }
+  .config-meta { font-size: 11px; color: #999; }
+
+  /* Header chip icons (top bar right side) */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .plugin-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #286EFA, #1550C0);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .plugin-title { font-size: 15px; font-weight: 600; }
+  .plugin-by { font-size: 11px; color: #999; }
+  .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .chip-pro { background: #8D00B1; color: white; }
+  .chip-wpmu { background: white; border: 1px solid #DDD; color: #333; }
+  .top-icon {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    color: #999;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  .avatar {
+    width: 30px; height: 30px;
+    background: #FFB347;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: white;
+  }
+
+  /* Sidebar inner card wrapper */
+  .sidebar-content-wrapper {
+    display: flex;
+    flex: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="spec-page">
+
+  <!-- ===== HEADER ===== -->
+  <div class="spec-header">
+    <h1>Defender — Settings Redesign</h1>
+    <p>UX Spec & Interactive Wireframes &middot; WPMU DEV Design System</p>
+  </div>
+
+  <!-- ===== SECTION 1: IA ===== -->
+  <div class="spec-section">
+    <h3>1 — Information Architecture</h3>
+    <div class="rationale">
+      <strong>Why this grouping?</strong> Admins think in terms of <em>what they're protecting</em> (access, identity, traffic) — not the underlying technology. The four groups map to natural security workflows. Moving items from the old "Tools" menu into Settings creates <strong>one single destination</strong> for all configuration, eliminating the cognitive split between two menus.
+    </div>
+    <div class="ia-grid">
+      <div class="ia-group">
+        <div class="ia-group-label">Access & Authentication</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> Mask Login Area</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> Two-Factor Auth (2FA)</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> Password Rules</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> Session Protection</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> CAPTCHA</div>
+      </div>
+      <div class="ia-group">
+        <div class="ia-group-label">Monitoring & Logging</div>
+        <div class="ia-item"><span class="dot dot-green"></span> Audit Logging</div>
+        <div class="ia-item"><span class="dot dot-green"></span> Notifications</div>
+      </div>
+      <div class="ia-group">
+        <div class="ia-group-label">Security Policies</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> Security Headers</div>
+      </div>
+      <div class="ia-group">
+        <div class="ia-group-label">General</div>
+        <div class="ia-item"><span class="dot dot-purple"></span> General</div>
+        <div class="ia-item"><span class="dot dot-purple"></span> Configs</div>
+        <div class="ia-item"><span class="dot dot-purple"></span> Data & Settings</div>
+        <div class="ia-item"><span class="dot dot-purple"></span> Accessibility</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: RATIONALE ===== -->
+  <div class="spec-section">
+    <h3>2 — Sidebar Tab Order & Rationale</h3>
+    <div class="rationale">
+      <strong>1. Access & Authentication first</strong> — login security is the #1 admin task. Mask Login leads as the simplest toggle (quick win), then 2FA (most impactful), Password Rules, Session Protection, CAPTCHA.<br><br>
+      <strong>2. Audit Logging & Notifications in the middle</strong> — "set once, monitor always" features. After locking down access, admins want visibility into what's happening on their site.<br><br>
+      <strong>3. Security Headers isolated</strong> under Security Policies — HTTP-level protection is a distinct security layer, typically configured once during initial setup.<br><br>
+      <strong>4. General/Configs/Data/Accessibility at the bottom</strong> — these are plugin-level meta-settings, matching every WPMU DEV plugin's universal pattern (Smush, Hummingbird, etc.).<br><br>
+      <strong>"NEW" badges</strong> on 2FA, Audit Logging, and Notifications draw attention to relocated/new features without disrupting existing muscle memory.
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: WIREFRAME ===== -->
+  <div class="spec-section">
+    <h3>3 — Interactive Wireframe (Click sidebar tabs)</h3>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">Settings / <span id="breadcrumb-text">Mask Login Area</span></div>
+
+  <!-- ===== THE CARD ===== -->
+  <div class="settings-card">
+    <!-- Top bar -->
+    <div style="display: flex; flex-direction: column; width: 100%;">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <div class="plugin-icon">D</div>
+          <div>
+            <div class="plugin-title">Defender</div>
+            <div class="plugin-by">by &copy; wpmudev</div>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <span class="chip chip-pro">Pro Features</span>
+          <span class="chip chip-wpmu">◉ WPMU DEV</span>
+          <span class="top-icon">⊕</span>
+          <span class="top-icon">💬</span>
+          <span class="top-icon">📊</span>
+          <div class="avatar">YC</div>
+        </div>
+      </div>
+
+      <!-- Sidebar + Content row -->
+      <div class="sidebar-content-wrapper">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+
+          <div class="section-label">Access & Authentication</div>
+          <div class="tab active" data-tab="mask-login">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            Mask Login Area
+          </div>
+          <div class="tab" data-tab="2fa">
+            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            Two-Factor Auth
+            <span class="badge-new">NEW</span>
+          </div>
+          <div class="tab" data-tab="password">
+            <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+            Password Rules
+          </div>
+          <div class="tab" data-tab="session">
+            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            Session Protection
+          </div>
+          <div class="tab" data-tab="captcha">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            CAPTCHA
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section-label">Monitoring & Logging</div>
+          <div class="tab" data-tab="audit">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+            Audit Logging
+            <span class="badge-new">NEW</span>
+          </div>
+          <div class="tab" data-tab="notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Notifications
+            <span class="badge-new">NEW</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section-label">Security Policies</div>
+          <div class="tab" data-tab="headers">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            Security Headers
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section-label">General</div>
+          <div class="tab" data-tab="general">
+            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            General
+          </div>
+          <div class="tab" data-tab="configs">
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+            Configs
+          </div>
+          <div class="tab" data-tab="data">
+            <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+            Data & Settings
+          </div>
+          <div class="tab" data-tab="accessibility">
+            <svg viewBox="0 0 24 24"><path d="M20.5 6c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2zM12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+            Accessibility
+          </div>
+        </div>
+
+        <!-- ===== CONTENT PANELS ===== -->
+
+        <!-- MASK LOGIN AREA -->
+        <div class="content active" id="tab-mask-login">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Configuration</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Enable login masking <i class="i-icon">?</i></div>
+                  <div class="row-desc">Replace wp-login.php with a custom URL</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Custom login URL</div>
+                  <div class="row-desc">yoursite.com/<strong>my-secret-login</strong></div>
+                </div>
+                <input type="text" class="input" value="my-secret-login" style="max-width: 180px">
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Redirect traffic <i class="i-icon">?</i></div>
+                  <div class="row-desc">Where to send wp-login.php visitors</div>
+                </div>
+                <select class="select">
+                  <option>404 Page</option>
+                  <option>Homepage</option>
+                  <option>Custom URL</option>
+                </select>
+              </div>
+            </div>
+            <div class="content-col">
+              <div class="section-heading">Advanced</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Enforce strict slugs <i class="i-icon">?</i></div>
+                  <div class="row-desc">Only allow the masked URL to access login</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Allowed paths <i class="i-icon">?</i></div>
+                  <div class="row-desc">Paths excluded from login masking</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- TWO-FACTOR AUTH -->
+        <div class="content" id="tab-2fa">
+          <!-- Header -->
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+            <div style="font-size:15px;font-weight:600;color:var(--text-dark);">Two-Factor Authentication</div>
+          </div>
+          <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Configure your two-factor authentication settings. Our recommendations are enabled by default.</p>
+
+          <div class="notice notice-blue">
+            ℹ Two-factor authentication is now active. User roles with this feature enabled must visit their <a href="#" style="color:#286EFA;font-weight:500;">Profile page</a> to finish setting up.
+          </div>
+
+          <div class="content-grid">
+            <div class="content-col">
+              <!-- User Roles -->
+              <div class="section-heading">User Roles</div>
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Choose the user roles you want to enable two-factor authentication for.</p>
+              <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+                <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">User Role</div>
+                <div class="row" style="padding:10px 16px;margin:0;">
+                  <div class="row-label">Administrator</div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row" style="padding:10px 16px;margin:0;">
+                  <div class="row-label">Editor</div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row" style="padding:10px 16px;margin:0;">
+                  <div class="row-label">Author</div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row" style="padding:10px 16px;margin:0;">
+                  <div class="row-label">Contributor</div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row" style="padding:10px 16px;margin:0;border-bottom:none;">
+                  <div class="row-label">Subscriber</div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+              </div>
+
+              <!-- Force Authentication -->
+              <div class="section-heading">Force Authentication</div>
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">By default, two-factor authentication is optional for users. This setting forces users to activate two-factor.</p>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Force users to log in with two-factor authentication</div>
+                  <div class="row-desc">Note: Users will be forced to set up two-factor when they next login.</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+
+              <!-- App Title -->
+              <div class="section-heading">App Title</div>
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Customise the title that appears in the Authenticator app for this website.</p>
+              <div style="margin-bottom:4px;font-size:11px;color:var(--text-light);">Custom Title</div>
+              <input type="text" class="input" value="deftest-ikkk.tempurl.host" style="max-width:280px;">
+            </div>
+
+            <div class="content-col">
+              <!-- Custom Graphic -->
+              <div class="section-heading">Custom Graphic</div>
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">By default, Defender's icon appears above the login fields. You can upload your own branding, or turn this feature off.</p>
+              <div class="row">
+                <div class="row-label">Enable custom graphics above login fields</div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+
+              <!-- Emails -->
+              <div class="section-heading">Emails</div>
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Customize the default copy for emails the two-factor feature sends to users.</p>
+              <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+                <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">Email</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;">
+                  <span style="font-size:13px;color:var(--text-dark);">Fallback email one time password</span>
+                  <span style="color:#999;cursor:pointer;">✏️</span>
+                </div>
+              </div>
+
+              <!-- App Download -->
+              <div class="section-heading">App Download</div>
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Need the app? Here's links to the official iOS and Android authenticator applications.</p>
+              <select class="select" style="margin-bottom:10px;">
+                <option selected>Google Authenticator</option>
+                <option>Microsoft Authenticator</option>
+                <option>Authy</option>
+              </select>
+              <div style="display:flex;gap:8px;margin-top:6px;">
+                <div style="background:#111;color:white;padding:6px 14px;border-radius:6px;font-size:10px;display:flex;align-items:center;gap:4px;cursor:pointer;"> App Store</div>
+                <div style="background:#111;color:white;padding:6px 14px;border-radius:6px;font-size:10px;display:flex;align-items:center;gap:4px;cursor:pointer;">▶ Google Play</div>
+              </div>
+
+              <!-- WooCommerce -->
+              <div class="section-heading">WooCommerce</div>
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Enable this option to allow users to configure two-factor authentication from WooCommerce "My Account" page.</p>
+              <div class="row">
+                <div class="row-label">Enable two-factor authentication for WooCommerce</div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="notice notice-blue" style="margin-top:8px;padding:8px 12px;">
+                ℹ WooCommerce must be active to use this feature.
+              </div>
+
+              <!-- Active Users -->
+              <div class="section-heading">Active Users</div>
+              <p style="font-size:12px;color:var(--text-light);">Here's a quick link to see which of your users have enabled two-factor authentication.</p>
+              <a href="#" style="font-size:12px;color:var(--blue);font-weight:500;text-decoration:none;">View users</a> <span style="font-size:12px;color:var(--text-light);">who have enabled this feature.</span>
+            </div>
+          </div>
+
+          <!-- Bottom bar -->
+          <div class="save-bar" style="justify-content:space-between;">
+            <button class="btn btn-ghost">↻ DEACTIVATE</button>
+            <button class="btn btn-blue">💾 SAVE CHANGES</button>
+          </div>
+        </div>
+
+        <!-- PASSWORD RULES -->
+        <div class="content" id="tab-password">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Strength requirements</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Enforce strong passwords <i class="i-icon">?</i></div>
+                  <div class="row-desc">Require complex passwords for all users</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Minimum length</div>
+                </div>
+                <select class="select">
+                  <option selected>8 characters</option>
+                  <option>10 characters</option>
+                  <option>12 characters</option>
+                  <option>16 characters</option>
+                </select>
+              </div>
+            </div>
+            <div class="content-col">
+              <div class="section-heading">Breach protection</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Detect compromised passwords <i class="i-icon">?</i></div>
+                  <div class="row-desc">Check against known data breaches</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Force password reset <i class="i-icon">?</i></div>
+                  <div class="row-desc">Require users to change compromised passwords</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- SESSION PROTECTION -->
+        <div class="content" id="tab-session">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Idle timeout</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Enable idle timeout <i class="i-icon">?</i></div>
+                  <div class="row-desc">Auto-logout after inactivity</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Timeout duration</div>
+                </div>
+                <select class="select">
+                  <option>15 minutes</option>
+                  <option selected>30 minutes</option>
+                  <option>60 minutes</option>
+                  <option>120 minutes</option>
+                </select>
+              </div>
+
+              <div class="section-heading">Login duration</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">"Remember Me" duration <i class="i-icon">?</i></div>
+                  <div class="row-desc">Override default 14-day WordPress setting</div>
+                </div>
+                <select class="select">
+                  <option>1 day</option>
+                  <option>3 days</option>
+                  <option>7 days</option>
+                  <option selected>14 days (default)</option>
+                </select>
+              </div>
+            </div>
+            <div class="content-col">
+              <div class="section-heading">Session validation</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Lock session to IP <i class="i-icon">?</i></div>
+                  <div class="row-desc">Invalidate if IP changes mid-session</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Lock session to browser <i class="i-icon">?</i></div>
+                  <div class="row-desc">Invalidate if user agent changes</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- CAPTCHA -->
+        <div class="content" id="tab-captcha">
+          <!-- Header -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <div style="font-size:15px;font-weight:600;color:var(--text-dark);">CAPTCHA</div>
+            <span class="captcha-active-badge" style="font-size:10px;font-weight:600;padding:3px 10px;border-radius:3px;background:#FFF6ED;color:#FF6D00;border:1px solid #FFD9B3;">reCAPTCHA</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Set up a human verification system to keep malicious software from engaging in abusive activities on your website while helping your legitimate users to enter with ease.</p>
+
+          <div class="notice notice-orange">
+            ⚠ Configure a CAPTCHA provider to verify users and prevent automated bots. Both reCAPTCHA and Cloudflare Turnstile are supported.
+          </div>
+
+          <!-- Provider Sub-tabs -->
+          <div style="display:flex;gap:0;border-bottom:2px solid var(--border-light);margin-bottom:24px;">
+            <div class="captcha-provider active-provider" data-provider="recaptcha" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--blue);border-bottom:2px solid var(--blue);margin-bottom:-2px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+              <span style="font-size:14px;">🔵</span> RECAPTCHA
+            </div>
+            <div class="captcha-provider" data-provider="turnstile" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-light);border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+              <span style="font-size:14px;">🟠</span> CLOUDFLARE TURNSTILE
+            </div>
+          </div>
+
+          <!-- ======= RECAPTCHA PANEL ======= -->
+          <div class="captcha-panel" id="captcha-recaptcha">
+            <!-- reCAPTCHA Type Selector -->
+            <div class="section-heading">reCAPTCHA type</div>
+            <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">Select a reCAPTCHA type and enter the API keys. Note that each reCAPTCHA type requires a different set of API keys.</p>
+            <a href="#" style="font-size:12px;color:var(--blue);text-decoration:none;font-weight:500;">Generate API keys.</a>
+
+            <div style="display:flex;gap:0;margin-top:14px;margin-bottom:20px;">
+              <div class="recaptcha-type active-recaptcha-type" data-rtype="v2checkbox" style="padding:8px 20px;font-size:12px;font-weight:500;border:1px solid var(--border);cursor:pointer;border-radius:4px 0 0 4px;color:var(--blue);background:var(--blue-bg);border-color:var(--blue);">V2 Checkbox</div>
+              <div class="recaptcha-type" data-rtype="v2invisible" style="padding:8px 20px;font-size:12px;font-weight:500;border:1px solid var(--border);border-left:none;cursor:pointer;color:var(--text-mid);background:white;">V2 Invisible</div>
+              <div class="recaptcha-type" data-rtype="v3" style="padding:8px 20px;font-size:12px;font-weight:500;border:1px solid var(--border);border-left:none;cursor:pointer;border-radius:0 4px 4px 0;color:var(--text-mid);background:white;">reCAPTCHA V3</div>
+            </div>
+
+            <!-- API Keys -->
+            <div style="background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:20px;">
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:14px;">Enter the API keys for reCAPTCHA v2 Checkbox type below.</p>
+              <div style="margin-bottom:12px;">
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Site key</div>
+                <input type="text" class="input" placeholder="Enter your site key">
+              </div>
+              <div>
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Secret key</div>
+                <input type="text" class="input" placeholder="Enter your secret key">
+              </div>
+            </div>
+
+            <div class="content-grid">
+              <div class="content-col">
+                <!-- Widget Settings -->
+                <div class="section-heading">Widget Settings</div>
+                <div style="display:flex;gap:16px;margin-bottom:16px;">
+                  <div style="flex:1;">
+                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Size</div>
+                    <select class="select" style="width:100%;">
+                      <option selected>Normal</option>
+                      <option>Compact</option>
+                    </select>
+                  </div>
+                  <div style="flex:1;">
+                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Theme</div>
+                    <select class="select" style="width:100%;">
+                      <option selected>Light</option>
+                      <option>Dark</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Widget Preview -->
+                <div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px;">reCAPTCHA widget preview</div>
+                <div style="border:1px solid var(--border);border-radius:6px;padding:20px;background:#FAFAFA;margin-bottom:6px;text-align:center;">
+                  <div style="display:inline-flex;align-items:center;gap:10px;background:white;border:1px solid #D3D3D3;border-radius:4px;padding:10px 16px;">
+                    <div style="width:22px;height:22px;border:2px solid #C1C1C1;border-radius:3px;"></div>
+                    <span style="font-size:13px;color:#555;">I'm not a robot</span>
+                    <div style="text-align:center;margin-left:16px;">
+                      <div style="font-size:16px;color:#4285F4;">↻</div>
+                      <div style="font-size:7px;color:#999;margin-top:1px;">reCAPTCHA</div>
+                    </div>
+                  </div>
+                </div>
+                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">If you see any errors in the preview, make sure the keys you've entered are valid, and you've listed your domain name while generating the keys.</p>
+
+                <!-- Error Message -->
+                <div class="section-heading">Error Message</div>
+                <input type="text" class="input" value="reCAPTCHA verification failed. Please try again." style="margin-bottom:6px;">
+                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">Choose the error message you want to display on your form when reCAPTCHA verification fails.</p>
+
+                <!-- Language -->
+                <div class="section-heading">Language</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">By default, we'll show the CAPTCHA in your website's language.</p>
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Language</div>
+                <select class="select">
+                  <option selected>Automatic</option>
+                  <option>English</option>
+                  <option>Spanish</option>
+                  <option>French</option>
+                  <option>German</option>
+                </select>
+              </div>
+
+              <div class="content-col">
+                <!-- CAPTCHA Locations -->
+                <div class="section-heading">CAPTCHA Locations</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Choose the forms for which CAPTCHA human verification system will be deployed.</p>
+                <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+                  <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">Locations</div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Login</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Register</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Lost Password</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Comment Form</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;border-bottom:none;">
+                    <div class="row-label">WooCommerce Checkout</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                </div>
+                <div class="notice notice-blue" style="margin-top:10px;padding:8px 12px;">
+                  ℹ BuddyPress must be active to validate visitors to your BuddyPress pages.
+                </div>
+
+                <!-- Disable for logged in users -->
+                <div class="section-heading">Logged-in Users</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Disable reCAPTCHA for logged in users.</p>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="chk on" style="cursor:pointer;" onclick="this.classList.toggle('on')">✓</div>
+                  <span style="font-size:13px;color:var(--text-dark);">Disable reCAPTCHA verification for logged in users</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ======= CLOUDFLARE TURNSTILE PANEL ======= -->
+          <div class="captcha-panel" id="captcha-turnstile" style="display:none;">
+            <div class="section-heading">Cloudflare Turnstile</div>
+            <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">Turnstile delivers frustration-free, CAPTCHA-free web experiences. Create a free Cloudflare account and get your API keys.</p>
+            <a href="#" style="font-size:12px;color:var(--blue);text-decoration:none;font-weight:500;">Get Turnstile API keys →</a>
+
+            <!-- API Keys -->
+            <div style="background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:20px;margin:16px 0 20px;">
+              <p style="font-size:12px;color:var(--text-light);margin-bottom:14px;">Enter the API keys for Cloudflare Turnstile below.</p>
+              <div style="margin-bottom:12px;">
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Site key</div>
+                <input type="text" class="input" placeholder="Enter your Turnstile site key">
+              </div>
+              <div>
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Secret key</div>
+                <input type="text" class="input" placeholder="Enter your Turnstile secret key">
+              </div>
+            </div>
+
+            <div class="content-grid">
+              <div class="content-col">
+                <!-- Widget Settings -->
+                <div class="section-heading">Widget Settings</div>
+                <div style="display:flex;gap:16px;margin-bottom:16px;">
+                  <div style="flex:1;">
+                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Widget Mode</div>
+                    <select class="select" style="width:100%;">
+                      <option selected>Managed</option>
+                      <option>Non-interactive</option>
+                      <option>Invisible</option>
+                    </select>
+                  </div>
+                  <div style="flex:1;">
+                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Theme</div>
+                    <select class="select" style="width:100%;">
+                      <option selected>Light</option>
+                      <option>Dark</option>
+                      <option>Auto</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Widget Preview -->
+                <div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px;">Turnstile widget preview</div>
+                <div style="border:1px solid var(--border);border-radius:6px;padding:20px;background:#FAFAFA;margin-bottom:6px;text-align:center;">
+                  <div style="display:inline-flex;align-items:center;gap:10px;background:white;border:1px solid #D3D3D3;border-radius:4px;padding:12px 20px;">
+                    <div style="width:20px;height:20px;border:2px solid #F48120;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                      <div style="width:8px;height:8px;background:#F48120;border-radius:50%;"></div>
+                    </div>
+                    <span style="font-size:13px;color:#555;">Verifying you are human...</span>
+                    <div style="text-align:center;margin-left:12px;">
+                      <div style="font-size:8px;color:#999;">Cloudflare</div>
+                      <div style="font-size:7px;color:#BBB;">Turnstile</div>
+                    </div>
+                  </div>
+                </div>
+                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">Preview may not render if keys are missing. Ensure valid Turnstile site key is entered above.</p>
+
+                <!-- Error Message -->
+                <div class="section-heading">Error Message</div>
+                <input type="text" class="input" value="Turnstile verification failed. Please try again." style="margin-bottom:6px;">
+                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">Choose the error message to display when Turnstile verification fails.</p>
+
+                <!-- Language -->
+                <div class="section-heading">Language</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">By default, we'll show Turnstile in your website's language.</p>
+                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Language</div>
+                <select class="select">
+                  <option selected>Automatic</option>
+                  <option>English</option>
+                  <option>Spanish</option>
+                  <option>French</option>
+                  <option>German</option>
+                </select>
+              </div>
+
+              <div class="content-col">
+                <!-- CAPTCHA Locations -->
+                <div class="section-heading">CAPTCHA Locations</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Choose the forms for which Turnstile verification will be deployed.</p>
+                <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+                  <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">Locations</div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Login</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Register</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Lost Password</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;">
+                    <div class="row-label">Comment Form</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                  <div class="row" style="padding:10px 16px;margin:0;border-bottom:none;">
+                    <div class="row-label">WooCommerce Checkout</div>
+                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                  </div>
+                </div>
+
+                <!-- Disable for logged in users -->
+                <div class="section-heading">Logged-in Users</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Disable Turnstile for logged in users.</p>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div class="chk on" style="cursor:pointer;" onclick="this.classList.toggle('on')">✓</div>
+                  <span style="font-size:13px;color:var(--text-dark);">Disable Turnstile verification for logged in users</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom bar -->
+          <div class="save-bar" style="justify-content:space-between;">
+            <button class="btn btn-ghost">↻ DEACTIVATE</button>
+            <button class="btn btn-blue">💾 SAVE CHANGES</button>
+          </div>
+        </div>
+
+        <!-- AUDIT LOGGING -->
+        <div class="content" id="tab-audit">
+          <!-- Sub-tabs: Event Logs | Settings -->
+          <div style="display:flex;gap:0;border-bottom:2px solid var(--border-light);margin-bottom:22px;">
+            <div class="audit-subtab active-subtab" data-audit="event-logs" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--blue);border-bottom:2px solid var(--blue);margin-bottom:-2px;cursor:pointer;">Event Logs</div>
+            <div class="audit-subtab" data-audit="audit-settings" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-light);border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;">Settings</div>
+          </div>
+
+          <!-- SUB-TAB: Event Logs -->
+          <div class="audit-panel active-audit-panel" id="audit-event-logs">
+            <!-- Header row -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <div style="font-size:15px;font-weight:600;color:var(--text-dark);">Event Logs</div>
+              <button class="btn btn-outline" style="font-size:11px;padding:6px 14px;">⬇ EXPORT CSV</button>
+            </div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:18px;">Here are your latest event logs showing what's been happening behind the scenes.</p>
+
+            <!-- Date range + filter bar -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:12px;color:var(--text-light);">Date range</span>
+                <div style="display:flex;align-items:center;gap:8px;border:1px solid #DDD;border-radius:4px;padding:7px 12px;font-size:12px;color:#333;background:white;">
+                  <span>March 17, 2026 – March 24, 2026</span>
+                  <span style="color:#999;">📅</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:12px;color:var(--text-light);">3 results</span>
+                <div style="border:1px solid #DDD;border-radius:4px;padding:5px 10px;cursor:pointer;font-size:13px;color:#888;">▼</div>
+              </div>
+            </div>
+
+            <!-- Event log entries -->
+            <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+              <!-- Log row 1 -->
+              <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border-light);background:white;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#286EFA;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0;margin-right:14px;">A</div>
+                <div style="flex:1;">
+                  <div style="font-size:13px;color:var(--text-dark);"><strong>admin</strong> logged in successfully</div>
+                  <div style="font-size:11px;color:var(--text-light);margin-top:2px;">User · 192.168.1.1 · March 24, 2026, 9:32 AM</div>
+                </div>
+                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:#E8FAF5;color:#16A085;">Login</span>
+              </div>
+              <!-- Log row 2 -->
+              <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border-light);background:white;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#1ABC9C;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0;margin-right:14px;">S</div>
+                <div style="flex:1;">
+                  <div style="font-size:13px;color:var(--text-dark);"><strong>satwik</strong> updated plugin "Defender Pro" to 4.12.1</div>
+                  <div style="font-size:11px;color:var(--text-light);margin-top:2px;">System · 10.0.0.15 · March 23, 2026, 3:15 PM</div>
+                </div>
+                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:#EEF4FF;color:#286EFA;">System</span>
+              </div>
+              <!-- Log row 3 -->
+              <div style="display:flex;align-items:center;padding:14px 16px;background:white;">
+                <div style="width:32px;height:32px;border-radius:50%;background:#FF6D00;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0;margin-right:14px;">?</div>
+                <div style="flex:1;">
+                  <div style="font-size:13px;color:var(--text-dark);">Failed login attempt for user <strong>"admin"</strong></div>
+                  <div style="font-size:11px;color:var(--text-light);margin-top:2px;">User · 45.33.12.88 · March 22, 2026, 11:47 PM</div>
+                </div>
+                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:#FFF0F0;color:#E74C3C;">Alert</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-TAB: Settings -->
+          <div class="audit-panel" id="audit-audit-settings" style="display:none;">
+            <div style="font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:20px;">Settings</div>
+
+            <div class="content-grid">
+              <div class="content-col">
+                <div class="section-heading">Storage</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:12px;">Events are stored in our API. You can choose how many days to keep logs for before they are removed.</p>
+                <div class="row">
+                  <div class="row-info">
+                    <div class="row-label">Retention period</div>
+                  </div>
+                  <select class="select">
+                    <option>30 days</option>
+                    <option>3 months</option>
+                    <option selected>6 months</option>
+                    <option>12 months</option>
+                  </select>
+                </div>
+                <div class="notice notice-orange" style="margin-top:12px;">
+                  ⚠️ To comply with GDPR, the longest retention period available is 12 months.
+                </div>
+
+                <div class="section-heading">Event types</div>
+                <div class="row">
+                  <div class="row-info">
+                    <div class="row-label">User events <i class="i-icon">?</i></div>
+                    <div class="row-desc">Login, logout, creation, role changes</div>
+                  </div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row">
+                  <div class="row-info">
+                    <div class="row-label">Content events <i class="i-icon">?</i></div>
+                    <div class="row-desc">Post/page create, edit, delete</div>
+                  </div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row">
+                  <div class="row-info">
+                    <div class="row-label">System events <i class="i-icon">?</i></div>
+                    <div class="row-desc">Plugin/theme installs, core updates</div>
+                  </div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row">
+                  <div class="row-info">
+                    <div class="row-label">Comment events <i class="i-icon">?</i></div>
+                    <div class="row-desc">Submissions, spam, deletions</div>
+                  </div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row">
+                  <div class="row-info">
+                    <div class="row-label">Media events <i class="i-icon">?</i></div>
+                    <div class="row-desc">Uploads, updates, deletions</div>
+                  </div>
+                  <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="row">
+                  <div class="row-info">
+                    <div class="row-label">Settings events <i class="i-icon">?</i></div>
+                    <div class="row-desc">Option changes with old/new values</div>
+                  </div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+              </div>
+              <div class="content-col">
+                <div class="section-heading">Excluded post types</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Skip logging for these post types:</p>
+                <input type="text" class="input" placeholder="revision, nav_menu_item" style="margin-bottom:16px;">
+
+                <div class="section-heading">Deactivate</div>
+                <p style="font-size:12px;color:var(--text-light);margin-bottom:12px;">If you no longer want to use this feature you can turn it off at any time.</p>
+                <button class="btn btn-ghost">DEACTIVATE</button>
+              </div>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">💾 SAVE CHANGES</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="content" id="tab-notifications">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Scan reports</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Enable scan reports <i class="i-icon">?</i></div>
+                  <div class="row-desc">Email summaries of malware scans</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Report frequency</div>
+                </div>
+                <select class="select">
+                  <option>Daily</option>
+                  <option selected>Weekly</option>
+                  <option>Monthly</option>
+                </select>
+              </div>
+
+              <div class="section-heading">Firewall alerts</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Lockout notifications <i class="i-icon">?</i></div>
+                  <div class="row-desc">Alert on brute-force lockouts</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">IP blocklist changes <i class="i-icon">?</i></div>
+                  <div class="row-desc">Alert on blocklist additions</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+
+              <div class="section-heading">Audit log alerts</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Critical event alerts <i class="i-icon">?</i></div>
+                  <div class="row-desc">Admin changes, plugin installs, file mods</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+            <div class="content-col">
+              <div class="section-heading">Recipients</div>
+              <div class="recipient">
+                <div class="recipient-avatar" style="background:#286EFA">Y</div>
+                <div class="recipient-info">
+                  <div class="recipient-name">yudy@incsub.com</div>
+                  <div class="recipient-meta">Administrator · All notifications</div>
+                </div>
+                <span class="tag tag-green">Active</span>
+              </div>
+              <div class="recipient">
+                <div class="recipient-avatar" style="background:#1ABC9C">S</div>
+                <div class="recipient-info">
+                  <div class="recipient-name">satwik@wpmudev.com</div>
+                  <div class="recipient-meta">Administrator · Scan reports only</div>
+                </div>
+                <span class="tag tag-green">Active</span>
+              </div>
+              <div style="padding-top: 10px;">
+                <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">+ Add Recipient</button>
+              </div>
+
+              <div class="section-heading">Email settings</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Sender email <i class="i-icon">?</i></div>
+                  <div class="row-desc">"From" address for all emails</div>
+                </div>
+                <input type="text" class="input" value="noreply@yoursite.com" style="max-width: 190px">
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- SECURITY HEADERS -->
+        <div class="content" id="tab-headers">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Response headers</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">X-Frame-Options <i class="i-icon">?</i></div>
+                  <div class="row-desc">Prevent clickjacking via iframes</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">X-Content-Type-Options <i class="i-icon">?</i></div>
+                  <div class="row-desc">Prevent MIME-type sniffing</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Strict-Transport-Security <i class="i-icon">?</i></div>
+                  <div class="row-desc">Force HTTPS connections</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+            <div class="content-col">
+              <div class="section-heading">Policy headers</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Referrer-Policy <i class="i-icon">?</i></div>
+                  <div class="row-desc">Control referrer info sharing</div>
+                </div>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Permissions-Policy <i class="i-icon">?</i></div>
+                  <div class="row-desc">Control camera, mic, geolocation</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Content-Security-Policy <i class="i-icon">?</i></div>
+                  <div class="row-desc">Restrict resource loading for XSS</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- GENERAL -->
+        <div class="content" id="tab-general">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Usage data</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Usage tracking <i class="i-icon">?</i></div>
+                  <div class="row-desc">Share anonymous usage data to improve Defender</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+            <div class="content-col">
+              <div class="section-heading">Translation</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Language</div>
+                  <div class="row-desc">Plugin interface language</div>
+                </div>
+                <select class="select">
+                  <option selected>English (US)</option>
+                  <option>Spanish</option>
+                  <option>French</option>
+                  <option>German</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- CONFIGS -->
+        <div class="content" id="tab-configs">
+          <div class="notice notice-green">
+            ✓ Quickly replicate security settings across multiple WordPress sites using config bundles.
+          </div>
+          <div class="section-heading">Saved configs</div>
+          <div class="config-row">
+            <div class="config-icon">📦</div>
+            <div class="config-info">
+              <div class="config-name">Production Standard</div>
+              <div class="config-meta">Created Apr 12, 2025 · All modules</div>
+            </div>
+            <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">Apply</button>
+          </div>
+          <div class="config-row">
+            <div class="config-icon">📦</div>
+            <div class="config-info">
+              <div class="config-name">Starter Hardened</div>
+              <div class="config-meta">Created Mar 1, 2025 · Basic lockdown</div>
+            </div>
+            <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">Apply</button>
+          </div>
+          <div style="padding-top: 16px; display: flex; gap: 10px;">
+            <button class="btn btn-blue">Save Current Config</button>
+            <button class="btn btn-ghost">Upload Config</button>
+          </div>
+        </div>
+
+        <!-- DATA & SETTINGS -->
+        <div class="content" id="tab-data">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Uninstall behavior</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Remove settings on uninstall <i class="i-icon">?</i></div>
+                  <div class="row-desc">Delete all Defender settings from DB</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Remove data on uninstall <i class="i-icon">?</i></div>
+                  <div class="row-desc">Delete logs, scans, quarantined files</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+            <div class="content-col">
+              <div class="section-heading">Reset</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Restore all defaults</div>
+                  <div class="row-desc">Reset all Defender settings to original state</div>
+                </div>
+                <button class="btn-restore">↺ Restore</button>
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- ACCESSIBILITY -->
+        <div class="content" id="tab-accessibility">
+          <div class="content-grid">
+            <div class="content-col">
+              <div class="section-heading">Visual</div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">High contrast mode <i class="i-icon">?</i></div>
+                  <div class="row-desc">Increase color contrast for visibility</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div class="row">
+                <div class="row-info">
+                  <div class="row-label">Reduce motion <i class="i-icon">?</i></div>
+                  <div class="row-desc">Minimize animations and transitions</div>
+                </div>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+      </div><!-- /sidebar-content-wrapper -->
+    </div><!-- /column wrapper -->
+  </div><!-- /settings-card -->
+
+  <!-- ===== SECTION 4: DECISION TABLE ===== -->
+  <div class="spec-section" style="margin-top: 40px;">
+    <h3>4 — Design Decisions Summary</h3>
+    <table class="decision-table">
+      <thead>
+        <tr><th>Decision</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Eliminate "Tools" menu entirely</td><td>One destination for all config — no guessing. Follows Hick's Law: fewer choices → faster decisions.</td></tr>
+        <tr><td>Section labels in sidebar</td><td>12 tabs without grouping = choice overload. Labels act as visual anchors — scan group first, then drill into tabs.</td></tr>
+        <tr><td>Access & Auth at top</td><td>Most frequently configured area (80%+ support tickets relate to access). Top = highest frequency-of-use.</td></tr>
+        <tr><td>Audit → Notifications order</td><td>Cause-effect flow: "What do I track?" → "How am I alerted?" Mirrors admin mental model.</td></tr>
+        <tr><td>Security Headers isolated</td><td>HTTP-level protection is a different security layer than app-level auth. Mixing creates category confusion.</td></tr>
+        <tr><td>General group at bottom</td><td>Matches Smush, Hummingbird, and all WPMU DEV plugins. Consistency across ecosystem = zero relearning.</td></tr>
+        <tr><td>"NEW" badges on 3 tabs</td><td>Guides existing users to relocated features without disruption. Auto-expire after 30 days or first visit.</td></tr>
+        <tr><td>Two-column content layout</td><td>Matches Smush's side-by-side pattern. Reduces scroll depth while keeping related settings visible together.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align: center; padding: 40px 0; color: #AAA; font-size: 12px;">
+    Defender Settings Redesign Spec · WPMU DEV · 2025
+  </div>
+
+</div><!-- /spec-page -->
+
+<script>
+  const tabs = document.querySelectorAll('.sidebar .tab');
+  const contents = document.querySelectorAll('.content');
+  const breadcrumb = document.getElementById('breadcrumb-text');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      let text = tab.textContent.replace('NEW', '').trim();
+      breadcrumb.textContent = text;
+    });
+  });
+
+  // CAPTCHA provider tabs
+  document.querySelectorAll('.captcha-provider').forEach(pt => {
+    pt.addEventListener('click', () => {
+      document.querySelectorAll('.captcha-provider').forEach(p => {
+        p.style.color = 'var(--text-light)';
+        p.style.borderBottomColor = 'transparent';
+        p.classList.remove('active-provider');
+      });
+      pt.style.color = 'var(--blue)';
+      pt.style.borderBottomColor = 'var(--blue)';
+      pt.classList.add('active-provider');
+      document.querySelectorAll('.captcha-panel').forEach(p => p.style.display = 'none');
+      document.getElementById('captcha-' + pt.dataset.provider).style.display = 'block';
+      // Update badge
+      const badge = document.querySelector('.captcha-active-badge');
+      if (pt.dataset.provider === 'turnstile') {
+        badge.textContent = 'Turnstile';
+        badge.style.background = '#FFF3E0';
+        badge.style.color = '#E65100';
+        badge.style.borderColor = '#FFCC80';
+      } else {
+        badge.textContent = 'reCAPTCHA';
+        badge.style.background = '#FFF6ED';
+        badge.style.color = '#FF6D00';
+        badge.style.borderColor = '#FFD9B3';
+      }
+    });
+  });
+
+  // reCAPTCHA type buttons
+  document.querySelectorAll('.recaptcha-type').forEach(rt => {
+    rt.addEventListener('click', () => {
+      document.querySelectorAll('.recaptcha-type').forEach(r => {
+        r.style.color = 'var(--text-mid)';
+        r.style.background = 'white';
+        r.style.borderColor = 'var(--border)';
+        r.classList.remove('active-recaptcha-type');
+      });
+      rt.style.color = 'var(--blue)';
+      rt.style.background = 'var(--blue-bg)';
+      rt.style.borderColor = 'var(--blue)';
+      rt.classList.add('active-recaptcha-type');
+    });
+  });
+
+  // Audit Logging sub-tabs
+  document.querySelectorAll('.audit-subtab').forEach(st => {
+    st.addEventListener('click', () => {
+      document.querySelectorAll('.audit-subtab').forEach(s => {
+        s.style.color = 'var(--text-light)';
+        s.style.borderBottomColor = 'transparent';
+        s.classList.remove('active-subtab');
+      });
+      st.style.color = 'var(--blue)';
+      st.style.borderBottomColor = 'var(--blue)';
+      st.classList.add('active-subtab');
+      document.querySelectorAll('.audit-panel').forEach(p => p.style.display = 'none');
+      document.getElementById('audit-' + st.dataset.audit).style.display = 'block';
+    });
+  });
+</script>
+</body>
+</html>
