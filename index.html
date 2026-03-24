@@ -36,7 +36,7 @@
 
   /* ===== SPEC PAGE WRAPPER ===== */
   .spec-page {
-    max-width: 1100px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 30px 20px 60px;
   }
@@ -583,6 +583,176 @@
     display: flex;
     flex: 1;
   }
+
+  /* ===== WP ADMIN LEFT NAV ===== */
+  .wp-admin-wrapper {
+    display: flex;
+    min-height: 700px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  .wp-admin-nav {
+    width: 180px;
+    background: #3D3F6B;
+    flex-shrink: 0;
+    padding-top: 0;
+  }
+  .wp-nav-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    background: #4E50A2;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .wp-nav-header svg { width: 20px; height: 20px; fill: white; }
+  .wp-nav-header .arrow { margin-left: auto; font-size: 10px; opacity: 0.6; }
+  .wp-nav-item {
+    display: block;
+    padding: 10px 16px 10px 20px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.12s;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+  }
+  .wp-nav-item:hover {
+    background: rgba(255,255,255,0.06);
+    color: white;
+  }
+  .wp-nav-item.active {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-left-color: #7B83EB;
+  }
+  .wp-nav-section {
+    padding: 14px 16px 4px 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.35);
+  }
+  .wp-nav-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 4px 0;
+  }
+  .wp-admin-content {
+    flex: 1;
+    background: var(--page-bg);
+    overflow-y: auto;
+  }
+
+  /* Page views */
+  .page-view { display: none; padding: 24px 28px; }
+  .page-view.active { display: block; }
+  .page-view-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+  }
+
+  /* Firewall page inner sidebar */
+  .fw-layout {
+    display: flex;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    min-height: 500px;
+  }
+  .fw-sidebar {
+    width: 200px;
+    border-right: 1px solid var(--border);
+    padding-top: 8px;
+    flex-shrink: 0;
+  }
+  .fw-section-label {
+    padding: 14px 16px 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+  .fw-tab {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--text-mid);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fw-tab:hover { background: #FAFAFA; color: var(--text-dark); }
+  .fw-tab.active {
+    background: var(--blue-bg);
+    color: var(--blue);
+    border-left-color: var(--blue);
+    font-weight: 500;
+  }
+  .fw-tab .fw-badge {
+    margin-left: auto;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #FFD000;
+  }
+  .fw-content {
+    flex: 1;
+    padding: 30px;
+    display: none;
+  }
+  .fw-content.active { display: block; }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .empty-state-icon {
+    width: 80px; height: 80px;
+    margin: 0 auto 20px;
+    background: #F5F5F5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: #999;
+  }
+  .empty-state h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+  }
+  .empty-state p {
+    font-size: 13px;
+    color: var(--text-light);
+    max-width: 440px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+  }
+  .btn-dark {
+    background: #555;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 </style>
 </head>
 <body>
@@ -638,8 +808,228 @@
 
   <!-- ===== SECTION 3: WIREFRAME ===== -->
   <div class="spec-section">
-    <h3>3 — Interactive Wireframe (Click sidebar tabs)</h3>
+    <h3>3 — Interactive Wireframe (Click left menu + inner tabs)</h3>
   </div>
+
+  <!-- ===== WP ADMIN WRAPPER ===== -->
+  <div class="wp-admin-wrapper">
+
+    <!-- WP ADMIN LEFT NAV (Dark sidebar) -->
+    <div class="wp-admin-nav">
+      <div class="wp-nav-header">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        Defender
+        <span class="arrow">◀</span>
+      </div>
+      <div class="wp-nav-item" data-page="dashboard">Dashboard</div>
+      <div class="wp-nav-item" data-page="issues">Issues</div>
+      <div class="wp-nav-item" data-page="hardening">Hardening</div>
+      <div class="wp-nav-item" data-page="audit">Audit Log</div>
+      <div class="wp-nav-item" data-page="firewalls">Firewalls</div>
+      <div class="wp-nav-item active" data-page="settings">Settings</div>
+    </div>
+
+    <!-- ADMIN CONTENT AREA -->
+    <div class="wp-admin-content">
+
+      <!-- ===== DASHBOARD PAGE ===== -->
+      <div class="page-view" id="page-dashboard">
+        <div class="page-view-title">Dashboard</div>
+        <div class="empty-state">
+          <div class="empty-state-icon">🛡️</div>
+          <h3>Security Overview</h3>
+          <p>Your site security dashboard shows scan results, firewall stats, and recent audit events at a glance.</p>
+        </div>
+      </div>
+
+      <!-- ===== ISSUES PAGE ===== -->
+      <div class="page-view" id="page-issues">
+        <div class="page-view-title">Issues</div>
+        <div class="empty-state">
+          <div class="empty-state-icon">✅</div>
+          <h3>No Issues Found</h3>
+          <p>Great news! No security issues have been detected. Run a new scan to verify your site's security status.</p>
+          <button class="btn btn-blue">Run New Scan</button>
+        </div>
+      </div>
+
+      <!-- ===== HARDENING PAGE ===== -->
+      <div class="page-view" id="page-hardening">
+        <div class="page-view-title">Hardening</div>
+        <div class="empty-state">
+          <div class="empty-state-icon">🔧</div>
+          <h3>Security Recommendations</h3>
+          <p>Review and apply security tweaks to harden your WordPress installation against known vulnerabilities.</p>
+        </div>
+      </div>
+
+      <!-- ===== AUDIT LOG PAGE ===== -->
+      <div class="page-view" id="page-audit">
+        <div class="page-view-title">Audit Log</div>
+        <div class="empty-state">
+          <div class="empty-state-icon">📋</div>
+          <h3>Event Logs</h3>
+          <p>Track all security-related events including user logins, file changes, plugin updates, and configuration modifications.</p>
+        </div>
+      </div>
+
+      <!-- ===== FIREWALLS PAGE ===== -->
+      <div class="page-view" id="page-firewalls">
+        <div class="page-view-title">Firewalls</div>
+        <div class="fw-layout">
+          <div class="fw-sidebar">
+            <div class="fw-section-label">Global Firewall</div>
+            <div class="fw-tab active" data-fw="antibot">
+              AntiBot
+              <div class="fw-badge"></div>
+            </div>
+            <div class="fw-section-label">Local Firewall</div>
+            <div class="fw-tab" data-fw="blocklist">Local Blocklist</div>
+            <div class="fw-tab" data-fw="login-protect">Login Protection</div>
+            <div class="fw-tab" data-fw="404-detect">404 Detection</div>
+            <div class="fw-tab" data-fw="ua-banning">User Agent Banning</div>
+            <div class="fw-tab" data-fw="fw-logs">Logs</div>
+            <div class="fw-tab" data-fw="fw-settings">Settings</div>
+          </div>
+          <!-- AntiBot content -->
+          <div class="fw-content active" id="fw-antibot">
+            <div class="empty-state">
+              <div class="empty-state-icon">🛡️</div>
+              <h3>Activate AntiBot Global Firewall</h3>
+              <p>Powered by threat data from a network of over 750,000+ sites, AntiBot blocks harmful IPs with twice-daily updates. Activate for instant protection.</p>
+              <button class="btn-dark">DISABLED BY SERVER ADMINISTRATOR</button>
+            </div>
+          </div>
+          <!-- Local Blocklist -->
+          <div class="fw-content" id="fw-blocklist">
+            <div class="section-heading">IP Blocklist</div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Manually add IPs to block. Use individual IPs, ranges (127.0.0.1-127.0.0.100), or CIDR notation (127.0.0.1/24).</p>
+            <textarea class="input" rows="4" placeholder="Enter IP addresses, one per line..." style="resize:vertical;margin-bottom:16px;"></textarea>
+            <div class="section-heading">IP Allowlist</div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Trusted IPs exempt from all ban rules. Your current IP is shown to prevent self-lockout.</p>
+            <div class="notice notice-blue">ℹ Your current IP: <strong>192.168.1.1</strong></div>
+            <textarea class="input" rows="3" placeholder="Enter trusted IP addresses..." style="resize:vertical;"></textarea>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- Login Protection -->
+          <div class="fw-content" id="fw-login-protect">
+            <div class="section-heading">Login Protection</div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Configure brute-force protection thresholds and lockout durations.</p>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Failed login attempts before lockout</div>
+              </div>
+              <select class="select"><option>3</option><option selected>5</option><option>10</option><option>20</option></select>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Lockout duration</div>
+              </div>
+              <select class="select"><option>5 minutes</option><option selected>15 minutes</option><option>30 minutes</option><option>1 hour</option></select>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Lockout message</div>
+              </div>
+              <input type="text" class="input" value="You have been locked out due to too many failed login attempts." style="max-width:320px;">
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- 404 Detection -->
+          <div class="fw-content" id="fw-404-detect">
+            <div class="section-heading">404 Detection</div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Lock out IPs that trigger too many 404 errors, a common indicator of vulnerability scanning.</p>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enable 404 detection <i class="i-icon">?</i></div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">404 threshold before lockout</div>
+              </div>
+              <select class="select"><option>10</option><option selected>20</option><option>50</option></select>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Within timeframe</div>
+              </div>
+              <select class="select"><option>60 seconds</option><option selected>5 minutes</option><option>30 minutes</option></select>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- UA Banning -->
+          <div class="fw-content" id="fw-ua-banning">
+            <div class="section-heading">User Agent Banning</div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Block requests from specific user agents. One per line, supports regex patterns.</p>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enable user agent banning <i class="i-icon">?</i></div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <textarea class="input" rows="5" placeholder="MJ12bot&#10;AhrefsBot&#10;SemrushBot" style="resize:vertical;margin-top:12px;"></textarea>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- Logs -->
+          <div class="fw-content" id="fw-fw-logs">
+            <div class="section-heading">Firewall Logs</div>
+            <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">View recent firewall activity including blocked IPs, lockouts, and 404 detections.</p>
+            <div class="notice notice-blue">ℹ Showing last 7 days of firewall activity.</div>
+            <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+              <div style="display:flex;padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:#888;">
+                <div style="flex:2;">IP Address</div><div style="flex:2;">Reason</div><div style="flex:1;">Date</div><div style="flex:1;">Status</div>
+              </div>
+              <div style="padding:30px;text-align:center;color:var(--text-light);font-size:13px;">No firewall events recorded yet.</div>
+            </div>
+          </div>
+          <!-- FW Settings -->
+          <div class="fw-content" id="fw-fw-settings">
+            <div class="section-heading">Firewall Settings</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">IP detection method <i class="i-icon">?</i></div>
+                <div class="row-desc">HTTP header used to identify visitor IPs</div>
+              </div>
+              <select class="select"><option selected>REMOTE_ADDR</option><option>HTTP_X_FORWARDED_FOR</option><option>HTTP_X_REAL_IP</option></select>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Log retention <i class="i-icon">?</i></div>
+                <div class="row-desc">How long to keep firewall logs</div>
+              </div>
+              <select class="select"><option>7 days</option><option selected>30 days</option><option>90 days</option></select>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Send logs to API <i class="i-icon">?</i></div>
+                <div class="row-desc">Share anonymous threat data to improve AntiBot</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+        </div><!-- /fw-layout -->
+      </div>
+
+      <!-- ===== SETTINGS PAGE ===== -->
+      <div class="page-view active" id="page-settings">
 
   <!-- Breadcrumb -->
   <div class="breadcrumb">Settings / <span id="breadcrumb-text">Mask Login Area</span></div>
@@ -1546,6 +1936,11 @@
     </div><!-- /column wrapper -->
   </div><!-- /settings-card -->
 
+      </div><!-- /page-settings -->
+
+    </div><!-- /wp-admin-content -->
+  </div><!-- /wp-admin-wrapper -->
+
   <!-- ===== SECTION 4: DECISION TABLE ===== -->
   <div class="spec-section" style="margin-top: 40px;">
     <h3>4 — Design Decisions Summary</h3>
@@ -1572,6 +1967,27 @@
 </div><!-- /spec-page -->
 
 <script>
+  // WP Admin left nav
+  document.querySelectorAll('.wp-nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.wp-nav-item').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+      item.classList.add('active');
+      document.getElementById('page-' + item.dataset.page).classList.add('active');
+    });
+  });
+
+  // Firewall inner tabs
+  document.querySelectorAll('.fw-tab').forEach(ft => {
+    ft.addEventListener('click', () => {
+      document.querySelectorAll('.fw-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.fw-content').forEach(c => c.classList.remove('active'));
+      ft.classList.add('active');
+      document.getElementById('fw-' + ft.dataset.fw).classList.add('active');
+    });
+  });
+
+  // Settings inner tabs
   const tabs = document.querySelectorAll('.sidebar .tab');
   const contents = document.querySelectorAll('.content');
   const breadcrumb = document.getElementById('breadcrumb-text');
