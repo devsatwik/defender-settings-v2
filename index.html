@@ -611,8 +611,7 @@
         <div class="ia-item"><span class="dot dot-blue"></span> CAPTCHA</div>
       </div>
       <div class="ia-group">
-        <div class="ia-group-label">Monitoring & Logging</div>
-        <div class="ia-item"><span class="dot dot-green"></span> Audit Logging</div>
+        <div class="ia-group-label">Monitoring</div>
         <div class="ia-item"><span class="dot dot-green"></span> Notifications</div>
       </div>
       <div class="ia-group">
@@ -634,10 +633,10 @@
     <h3>2 — Sidebar Tab Order & Rationale</h3>
     <div class="rationale">
       <strong>1. Access & Authentication first</strong> — login security is the #1 admin task. Mask Login leads as the simplest toggle (quick win), then 2FA (most impactful), Password Rules, Session Protection, CAPTCHA.<br><br>
-      <strong>2. Audit Logging & Notifications in the middle</strong> — "set once, monitor always" features. After locking down access, admins want visibility into what's happening on their site.<br><br>
+      <strong>2. Notifications in the middle</strong> — "set once, monitor always" feature. After locking down access, admins want visibility into what's happening on their site.<br><br>
       <strong>3. Security Headers isolated</strong> under Security Policies — HTTP-level protection is a distinct security layer, typically configured once during initial setup.<br><br>
       <strong>4. General/Configs/Data/Accessibility at the bottom</strong> — these are plugin-level meta-settings, matching every WPMU DEV plugin's universal pattern (Smush, Hummingbird, etc.).<br><br>
-      <strong>"NEW" badges</strong> on 2FA, Audit Logging, and Notifications draw attention to relocated/new features without disrupting existing muscle memory.
+      <strong>"NEW" badges</strong> on 2FA and Notifications draw attention to relocated/new features without disrupting existing muscle memory.
     </div>
   </div>
 
@@ -701,12 +700,7 @@
 
           <div class="divider"></div>
 
-          <div class="section-label">Monitoring & Logging</div>
-          <div class="tab" data-tab="audit">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
-            Audit Logging
-            <span class="badge-new">NEW</span>
-          </div>
+          <div class="section-label">Monitoring</div>
           <div class="tab" data-tab="notifications">
             <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
             Notifications
@@ -1293,153 +1287,6 @@
         </div>
 
         <!-- AUDIT LOGGING -->
-        <div class="content" id="tab-audit">
-          <!-- Sub-tabs: Event Logs | Settings -->
-          <div style="display:flex;gap:0;border-bottom:2px solid var(--border-light);margin-bottom:22px;">
-            <div class="audit-subtab active-subtab" data-audit="event-logs" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--blue);border-bottom:2px solid var(--blue);margin-bottom:-2px;cursor:pointer;">Event Logs</div>
-            <div class="audit-subtab" data-audit="audit-settings" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-light);border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;">Settings</div>
-          </div>
-
-          <!-- SUB-TAB: Event Logs -->
-          <div class="audit-panel active-audit-panel" id="audit-event-logs">
-            <!-- Header row -->
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-              <div style="font-size:15px;font-weight:600;color:var(--text-dark);">Event Logs</div>
-              <button class="btn btn-outline" style="font-size:11px;padding:6px 14px;">⬇ EXPORT CSV</button>
-            </div>
-            <p style="font-size:13px;color:var(--text-light);margin-bottom:18px;">Here are your latest event logs showing what's been happening behind the scenes.</p>
-
-            <!-- Date range + filter bar -->
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <span style="font-size:12px;color:var(--text-light);">Date range</span>
-                <div style="display:flex;align-items:center;gap:8px;border:1px solid #DDD;border-radius:4px;padding:7px 12px;font-size:12px;color:#333;background:white;">
-                  <span>March 17, 2026 – March 24, 2026</span>
-                  <span style="color:#999;">📅</span>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;color:var(--text-light);">3 results</span>
-                <div style="border:1px solid #DDD;border-radius:4px;padding:5px 10px;cursor:pointer;font-size:13px;color:#888;">▼</div>
-              </div>
-            </div>
-
-            <!-- Event log entries -->
-            <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-              <!-- Log row 1 -->
-              <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border-light);background:white;">
-                <div style="width:32px;height:32px;border-radius:50%;background:#286EFA;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0;margin-right:14px;">A</div>
-                <div style="flex:1;">
-                  <div style="font-size:13px;color:var(--text-dark);"><strong>admin</strong> logged in successfully</div>
-                  <div style="font-size:11px;color:var(--text-light);margin-top:2px;">User · 192.168.1.1 · March 24, 2026, 9:32 AM</div>
-                </div>
-                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:#E8FAF5;color:#16A085;">Login</span>
-              </div>
-              <!-- Log row 2 -->
-              <div style="display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border-light);background:white;">
-                <div style="width:32px;height:32px;border-radius:50%;background:#1ABC9C;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0;margin-right:14px;">S</div>
-                <div style="flex:1;">
-                  <div style="font-size:13px;color:var(--text-dark);"><strong>satwik</strong> updated plugin "Defender Pro" to 4.12.1</div>
-                  <div style="font-size:11px;color:var(--text-light);margin-top:2px;">System · 10.0.0.15 · March 23, 2026, 3:15 PM</div>
-                </div>
-                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:#EEF4FF;color:#286EFA;">System</span>
-              </div>
-              <!-- Log row 3 -->
-              <div style="display:flex;align-items:center;padding:14px 16px;background:white;">
-                <div style="width:32px;height:32px;border-radius:50%;background:#FF6D00;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0;margin-right:14px;">?</div>
-                <div style="flex:1;">
-                  <div style="font-size:13px;color:var(--text-dark);">Failed login attempt for user <strong>"admin"</strong></div>
-                  <div style="font-size:11px;color:var(--text-light);margin-top:2px;">User · 45.33.12.88 · March 22, 2026, 11:47 PM</div>
-                </div>
-                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:#FFF0F0;color:#E74C3C;">Alert</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- SUB-TAB: Settings -->
-          <div class="audit-panel" id="audit-audit-settings" style="display:none;">
-            <div style="font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:20px;">Settings</div>
-
-            <div class="content-grid">
-              <div class="content-col">
-                <div class="section-heading">Storage</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:12px;">Events are stored in our API. You can choose how many days to keep logs for before they are removed.</p>
-                <div class="row">
-                  <div class="row-info">
-                    <div class="row-label">Retention period</div>
-                  </div>
-                  <select class="select">
-                    <option>30 days</option>
-                    <option>3 months</option>
-                    <option selected>6 months</option>
-                    <option>12 months</option>
-                  </select>
-                </div>
-                <div class="notice notice-orange" style="margin-top:12px;">
-                  ⚠️ To comply with GDPR, the longest retention period available is 12 months.
-                </div>
-
-                <div class="section-heading">Event types</div>
-                <div class="row">
-                  <div class="row-info">
-                    <div class="row-label">User events <i class="i-icon">?</i></div>
-                    <div class="row-desc">Login, logout, creation, role changes</div>
-                  </div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row">
-                  <div class="row-info">
-                    <div class="row-label">Content events <i class="i-icon">?</i></div>
-                    <div class="row-desc">Post/page create, edit, delete</div>
-                  </div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row">
-                  <div class="row-info">
-                    <div class="row-label">System events <i class="i-icon">?</i></div>
-                    <div class="row-desc">Plugin/theme installs, core updates</div>
-                  </div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row">
-                  <div class="row-info">
-                    <div class="row-label">Comment events <i class="i-icon">?</i></div>
-                    <div class="row-desc">Submissions, spam, deletions</div>
-                  </div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row">
-                  <div class="row-info">
-                    <div class="row-label">Media events <i class="i-icon">?</i></div>
-                    <div class="row-desc">Uploads, updates, deletions</div>
-                  </div>
-                  <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row">
-                  <div class="row-info">
-                    <div class="row-label">Settings events <i class="i-icon">?</i></div>
-                    <div class="row-desc">Option changes with old/new values</div>
-                  </div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-              </div>
-              <div class="content-col">
-                <div class="section-heading">Excluded post types</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Skip logging for these post types:</p>
-                <input type="text" class="input" placeholder="revision, nav_menu_item" style="margin-bottom:16px;">
-
-                <div class="section-heading">Deactivate</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:12px;">If you no longer want to use this feature you can turn it off at any time.</p>
-                <button class="btn btn-ghost">DEACTIVATE</button>
-              </div>
-            </div>
-            <div class="save-bar">
-              <button class="btn btn-ghost">Cancel</button>
-              <button class="btn btn-blue">💾 SAVE CHANGES</button>
-            </div>
-          </div>
-        </div>
-
         <!-- NOTIFICATIONS -->
         <div class="content" id="tab-notifications">
           <div class="content-grid">
@@ -1479,14 +1326,6 @@
                 <div class="toggle" onclick="this.classList.toggle('on')"></div>
               </div>
 
-              <div class="section-heading">Audit log alerts</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Critical event alerts <i class="i-icon">?</i></div>
-                  <div class="row-desc">Admin changes, plugin installs, file mods</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
             </div>
             <div class="content-col">
               <div class="section-heading">Recipients</div>
@@ -1726,7 +1565,6 @@
         <tr><td>Eliminate "Tools" menu entirely</td><td>One destination for all config — no guessing. Follows Hick's Law: fewer choices → faster decisions.</td></tr>
         <tr><td>Section labels in sidebar</td><td>12 tabs without grouping = choice overload. Labels act as visual anchors — scan group first, then drill into tabs.</td></tr>
         <tr><td>Access & Auth at top</td><td>Most frequently configured area (80%+ support tickets relate to access). Top = highest frequency-of-use.</td></tr>
-        <tr><td>Audit → Notifications order</td><td>Cause-effect flow: "What do I track?" → "How am I alerted?" Mirrors admin mental model.</td></tr>
         <tr><td>Security Headers isolated</td><td>HTTP-level protection is a different security layer than app-level auth. Mixing creates category confusion.</td></tr>
         <tr><td>General group at bottom</td><td>Matches Smush, Hummingbird, and all WPMU DEV plugins. Consistency across ecosystem = zero relearning.</td></tr>
         <tr><td>"NEW" badges on 3 tabs</td><td>Guides existing users to relocated features without disruption. Auto-expire after 30 days or first visit.</td></tr>
@@ -1802,21 +1640,6 @@
     });
   });
 
-  // Audit Logging sub-tabs
-  document.querySelectorAll('.audit-subtab').forEach(st => {
-    st.addEventListener('click', () => {
-      document.querySelectorAll('.audit-subtab').forEach(s => {
-        s.style.color = 'var(--text-light)';
-        s.style.borderBottomColor = 'transparent';
-        s.classList.remove('active-subtab');
-      });
-      st.style.color = 'var(--blue)';
-      st.style.borderBottomColor = 'var(--blue)';
-      st.classList.add('active-subtab');
-      document.querySelectorAll('.audit-panel').forEach(p => p.style.display = 'none');
-      document.getElementById('audit-' + st.dataset.audit).style.display = 'block';
-    });
-  });
 </script>
 </body>
 </html>
