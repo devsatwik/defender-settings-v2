@@ -771,22 +771,33 @@
     <div class="rationale">
       <strong>Why this grouping?</strong> Admins think in terms of <em>what they're protecting</em> (access, identity, traffic) — not the underlying technology. The four groups map to natural security workflows. Moving items from the old "Tools" menu into Settings creates <strong>one single destination</strong> for all configuration, eliminating the cognitive split between two menus.
     </div>
-    <div class="ia-grid">
+    <div class="ia-grid" style="grid-template-columns: repeat(4, 1fr);">
       <div class="ia-group">
-        <div class="ia-group-label">Access & Authentication</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> Mask Login Area</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> Two-Factor Auth (2FA)</div>
+        <div class="ia-group-label" style="background:#FFF6ED;border-color:#FFD6A5;color:#B35C00;">Firewalls (Left Nav)</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> AntiBot</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> Local Blocklist</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> Login Protection</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> 404 Detection</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> User Agent Banning</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> Logs</div>
+        <div class="ia-item" style="border-top:2px solid var(--blue);margin-top:4px;"><span class="dot dot-blue"></span> Mask Login Area</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> Two-Factor Auth</div>
         <div class="ia-item"><span class="dot dot-blue"></span> Password Rules</div>
         <div class="ia-item"><span class="dot dot-blue"></span> Session Protection</div>
         <div class="ia-item"><span class="dot dot-blue"></span> CAPTCHA</div>
+        <div class="ia-item"><span class="dot dot-orange"></span> Settings</div>
       </div>
       <div class="ia-group">
-        <div class="ia-group-label">Security Policies</div>
+        <div class="ia-group-label">Settings → Security Policies</div>
         <div class="ia-item"><span class="dot dot-orange"></span> Security Headers</div>
       </div>
       <div class="ia-group">
-        <div class="ia-group-label">General</div>
-        <div class="ia-item"><span class="dot dot-purple"></span> Notifications</div>
+        <div class="ia-group-label">Settings → Alerts & Reports</div>
+        <div class="ia-item"><span class="dot dot-green"></span> Alerts</div>
+        <div class="ia-item"><span class="dot dot-green"></span> Reports</div>
+      </div>
+      <div class="ia-group">
+        <div class="ia-group-label">Settings → General</div>
         <div class="ia-item"><span class="dot dot-purple"></span> General</div>
         <div class="ia-item"><span class="dot dot-purple"></span> Configs</div>
         <div class="ia-item"><span class="dot dot-purple"></span> Data & Settings</div>
@@ -799,10 +810,10 @@
   <div class="spec-section">
     <h3>2 — Sidebar Tab Order & Rationale</h3>
     <div class="rationale">
-      <strong>1. Access & Authentication first</strong> — login security is the #1 admin task. Mask Login leads as the simplest toggle (quick win), then 2FA (most impactful), Password Rules, Session Protection, CAPTCHA.<br><br>
-      <strong>2. Security Headers isolated</strong> under Security Policies — HTTP-level protection is a distinct security layer, typically configured once during initial setup.<br><br>
-      <strong>3. Notifications under General</strong> — alert preferences are plugin-level meta-settings alongside Configs, Data & Settings, and Accessibility. This matches the WPMU DEV pattern (Smush, Hummingbird, etc.).<br><br>
-      <strong>"NEW" badges</strong> on 2FA and Notifications draw attention to relocated/new features without disrupting existing muscle memory.
+      <strong>1. Access & Authentication under Firewalls</strong> — login security (Mask Login, 2FA, Password Rules, Session Protection, CAPTCHA) is fundamentally about controlling access to the site. Placing these under the Firewalls page groups all protective barriers together — both network-level (IP blocking, 404 detection) and application-level (login masking, 2FA). Admins think: "How do I protect my site?" → Firewalls.<br><br>
+      <strong>2. Security Policies (Settings)</strong> — HTTP security headers are a distinct, set-once concern. Isolated under Settings for clean separation from active firewall rules.<br><br>
+      <strong>3. Alerts & Reports split</strong> — Alerts are real-time event-driven notifications (lockouts, threats, file changes). Reports are scheduled periodic summaries (weekly scans, firewall stats). Each has its own recipients because the person who handles emergencies (CTO/DevOps) is often different from whoever reviews weekly reports (Project Manager/Client).<br><br>
+      <strong>4. General/Configs/Data/Accessibility</strong> — plugin-level meta-settings at the bottom, matching the WPMU DEV ecosystem pattern (Smush, Hummingbird, etc.).
     </div>
   </div>
 
@@ -889,6 +900,13 @@
             <div class="fw-tab" data-fw="404-detect">404 Detection</div>
             <div class="fw-tab" data-fw="ua-banning">User Agent Banning</div>
             <div class="fw-tab" data-fw="fw-logs">Logs</div>
+            <div class="fw-section-label">Access & Authentication</div>
+            <div class="fw-tab" data-fw="fw-mask-login">Mask Login Area</div>
+            <div class="fw-tab" data-fw="fw-2fa">Two-Factor Auth</div>
+            <div class="fw-tab" data-fw="fw-password">Password Rules</div>
+            <div class="fw-tab" data-fw="fw-session">Session Protection</div>
+            <div class="fw-tab" data-fw="fw-captcha">CAPTCHA</div>
+            <div class="fw-section-label">Firewall Settings</div>
             <div class="fw-tab" data-fw="fw-settings">Settings</div>
           </div>
           <!-- AntiBot content -->
@@ -1025,6 +1043,221 @@
               <button class="btn btn-blue">Save Changes</button>
             </div>
           </div>
+          <!-- Mask Login Area (under Firewall) -->
+          <div class="fw-content" id="fw-fw-mask-login">
+            <div class="section-heading">Configuration</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enable login masking <i class="i-icon">?</i></div>
+                <div class="row-desc">Replace wp-login.php with a custom URL slug</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Custom login URL</div>
+                <div class="row-desc">yoursite.com/<strong>my-secret-login</strong></div>
+              </div>
+              <input type="text" class="input" value="my-secret-login" style="max-width: 180px">
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Redirect traffic <i class="i-icon">?</i></div>
+                <div class="row-desc">Where to send wp-login.php visitors</div>
+              </div>
+              <select class="select"><option>404 Page</option><option>Homepage</option><option>Custom URL</option></select>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enforce strict slugs <i class="i-icon">?</i></div>
+                <div class="row-desc">Only allow the masked URL to access login</div>
+              </div>
+              <div class="toggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- Two-Factor Auth (under Firewall) -->
+          <div class="fw-content" id="fw-fw-2fa">
+            <div class="section-heading">User Roles</div>
+            <p style="font-size:12px;color:#888;margin-bottom:10px;">Choose the user roles to enable two-factor authentication for.</p>
+            <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:20px;">
+              <div style="display:flex;padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:#888;">
+                <div style="flex:3;">User Role</div><div style="flex:1;text-align:right;">Enabled</div>
+              </div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Administrator</div><div style="flex:1;text-align:right;"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Editor</div><div style="flex:1;text-align:right;"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Author</div><div style="flex:1;text-align:right;"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Contributor</div><div style="flex:1;text-align:right;"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Subscriber</div><div style="flex:1;text-align:right;"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div></div>
+            </div>
+            <div class="section-heading">Force Authentication</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Force users to log in with 2FA <i class="i-icon">?</i></div>
+                <div class="row-desc">Users will be forced to set up two-factor when they next login.</div>
+              </div>
+              <div class="toggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="section-heading">App Title</div>
+            <div class="row" style="flex-direction:column;align-items:flex-start;gap:6px">
+              <div class="row-label">Custom Title</div>
+              <input type="text" class="input" value="deftest-ikkk.tempurl.host" style="max-width: 300px">
+              <div class="row-desc">Customise the title that appears in the Authenticator app for this website.</div>
+            </div>
+            <div class="section-heading">Custom Graphic</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enable custom graphics above login fields <i class="i-icon">?</i></div>
+                <div class="row-desc">Upload your own branding, or turn this feature off.</div>
+              </div>
+              <div class="toggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="section-heading">WooCommerce</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enable 2FA for WooCommerce <i class="i-icon">?</i></div>
+                <div class="row-desc">Allow users to configure 2FA from WooCommerce "My Account" page.</div>
+              </div>
+              <div class="toggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="section-heading">Active Users</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label"><a href="#" style="color:var(--blue);text-decoration:none;">View users</a> who have enabled this feature.</div>
+              </div>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">DEACTIVATE</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- Password Rules (under Firewall) -->
+          <div class="fw-content" id="fw-fw-password">
+            <div class="section-heading">Strength requirements</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enforce strong passwords <i class="i-icon">?</i></div>
+                <div class="row-desc">Require complex passwords for all users</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Minimum length</div>
+              </div>
+              <select class="select"><option selected>8 characters</option><option>10 characters</option><option>12 characters</option><option>16 characters</option></select>
+            </div>
+            <div class="section-heading">Breach protection</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Detect compromised passwords <i class="i-icon">?</i></div>
+                <div class="row-desc">Check against known data breaches</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Force password reset <i class="i-icon">?</i></div>
+                <div class="row-desc">Require users to change compromised passwords</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- Session Protection (under Firewall) -->
+          <div class="fw-content" id="fw-fw-session">
+            <div class="section-heading">Idle timeout</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Enable idle timeout <i class="i-icon">?</i></div>
+                <div class="row-desc">Auto-logout after inactivity</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Timeout duration</div>
+              </div>
+              <select class="select"><option>15 minutes</option><option selected>30 minutes</option><option>60 minutes</option><option>120 minutes</option></select>
+            </div>
+            <div class="section-heading">Login duration</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">"Remember Me" duration <i class="i-icon">?</i></div>
+                <div class="row-desc">Override default 14-day WordPress setting</div>
+              </div>
+              <select class="select"><option>1 day</option><option>3 days</option><option>7 days</option><option selected>14 days (default)</option></select>
+            </div>
+            <div class="section-heading">Session validation</div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Lock session to IP <i class="i-icon">?</i></div>
+                <div class="row-desc">Invalidate if IP changes mid-session</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Lock session to browser <i class="i-icon">?</i></div>
+                <div class="row-desc">Invalidate if user agent changes</div>
+              </div>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
+          <!-- CAPTCHA (under Firewall) -->
+          <div class="fw-content" id="fw-fw-captcha">
+            <div class="section-heading">CAPTCHA Provider</div>
+            <div class="notice notice-orange">⚠ Configure a CAPTCHA provider to verify users and prevent automated bots.</div>
+            <div style="display:flex;border-bottom:2px solid var(--border);margin-bottom:16px;">
+              <div class="captcha-provider-tab active" onclick="this.parentElement.querySelectorAll('.captcha-provider-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');" style="padding:10px 16px;font-size:12px;font-weight:600;cursor:pointer;border-bottom:2px solid var(--blue);margin-bottom:-2px;color:var(--blue);">🔵 reCAPTCHA</div>
+              <div class="captcha-provider-tab" onclick="this.parentElement.querySelectorAll('.captcha-provider-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');" style="padding:10px 16px;font-size:12px;font-weight:600;cursor:pointer;color:#888;">🟡 Cloudflare Turnstile</div>
+            </div>
+            <div class="section-heading">reCAPTCHA type</div>
+            <p style="font-size:12px;color:#888;margin-bottom:10px;">Select a reCAPTCHA type and enter the API keys. <a href="#" style="color:var(--blue);">Generate API keys.</a></p>
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+              <div style="padding:8px 18px;border:1px solid var(--blue);border-radius:4px;font-size:12px;color:var(--blue);font-weight:500;cursor:pointer;background:var(--blue-bg);">V2 Checkbox</div>
+              <div style="padding:8px 18px;border:1px solid var(--border);border-radius:4px;font-size:12px;color:#666;cursor:pointer;">V2 Invisible</div>
+              <div style="padding:8px 18px;border:1px solid var(--border);border-radius:4px;font-size:12px;color:#666;cursor:pointer;">reCAPTCHA V3</div>
+            </div>
+            <div class="row" style="flex-direction:column;align-items:flex-start;gap:6px">
+              <div class="row-label">Site Key</div>
+              <input type="text" class="input" placeholder="Enter your site key">
+            </div>
+            <div class="row" style="flex-direction:column;align-items:flex-start;gap:6px">
+              <div class="row-label">Secret Key</div>
+              <input type="text" class="input" placeholder="Enter your secret key">
+            </div>
+            <div class="section-heading">CAPTCHA Locations</div>
+            <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:16px;">
+              <div style="display:flex;padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:#888;">
+                <div style="flex:3;">Locations</div><div style="flex:1;text-align:right;">Enabled</div>
+              </div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Login</div><div style="flex:1;text-align:right;"><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Register</div><div style="flex:1;text-align:right;"><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Lost Password</div><div style="flex:1;text-align:right;"><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div>
+              <div class="row" style="padding:10px 16px;"><div style="flex:3;">Comments</div><div style="flex:1;text-align:right;"><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div>
+            </div>
+            <div class="row">
+              <div class="row-info">
+                <div class="row-label">Disable for logged-in users <i class="i-icon">?</i></div>
+              </div>
+              <div class="chk on" onclick="this.classList.toggle('on')">✓</div>
+            </div>
+            <div class="save-bar">
+              <button class="btn btn-ghost">DEACTIVATE</button>
+              <button class="btn btn-blue">Save Changes</button>
+            </div>
+          </div>
         </div><!-- /fw-layout -->
       </div>
 
@@ -1032,7 +1265,7 @@
       <div class="page-view active" id="page-settings">
 
   <!-- Breadcrumb -->
-  <div class="breadcrumb">Settings / <span id="breadcrumb-text">Mask Login Area</span></div>
+  <div class="breadcrumb">Settings / <span id="breadcrumb-text">Security Headers</span></div>
 
   <!-- ===== THE CARD ===== -->
   <div class="settings-card">
@@ -1061,45 +1294,29 @@
         <!-- SIDEBAR -->
         <div class="sidebar">
 
-          <div class="section-label">Access & Authentication</div>
-          <div class="tab active" data-tab="mask-login">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-            Mask Login Area
-          </div>
-          <div class="tab" data-tab="2fa">
-            <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-            Two-Factor Auth
-            <span class="badge-new">NEW</span>
-          </div>
-          <div class="tab" data-tab="password">
-            <svg viewBox="0 0 24 24"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
-            Password Rules
-          </div>
-          <div class="tab" data-tab="session">
-            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-            Session Protection
-          </div>
-          <div class="tab" data-tab="captcha">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-            CAPTCHA
-          </div>
-
-          <div class="divider"></div>
-
           <div class="section-label">Security Policies</div>
-          <div class="tab" data-tab="headers">
+          <div class="tab active" data-tab="headers">
             <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
             Security Headers
           </div>
 
           <div class="divider"></div>
 
-          <div class="section-label">General</div>
-          <div class="tab" data-tab="notifications">
-            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-            Notifications
+          <div class="section-label">Alerts & Reports</div>
+          <div class="tab" data-tab="alerts">
+            <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+            Alerts
             <span class="badge-new">NEW</span>
           </div>
+          <div class="tab" data-tab="reports">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            Reports
+            <span class="badge-new">NEW</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section-label">General</div>
           <div class="tab" data-tab="general">
             <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
             General
@@ -1120,635 +1337,8 @@
 
         <!-- ===== CONTENT PANELS ===== -->
 
-        <!-- MASK LOGIN AREA -->
-        <div class="content active" id="tab-mask-login">
-          <div class="content-grid">
-            <div class="content-col">
-              <div class="section-heading">Configuration</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Enable login masking <i class="i-icon">?</i></div>
-                  <div class="row-desc">Replace wp-login.php with a custom URL</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Custom login URL</div>
-                  <div class="row-desc">yoursite.com/<strong>my-secret-login</strong></div>
-                </div>
-                <input type="text" class="input" value="my-secret-login" style="max-width: 180px">
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Redirect traffic <i class="i-icon">?</i></div>
-                  <div class="row-desc">Where to send wp-login.php visitors</div>
-                </div>
-                <select class="select">
-                  <option>404 Page</option>
-                  <option>Homepage</option>
-                  <option>Custom URL</option>
-                </select>
-              </div>
-            </div>
-            <div class="content-col">
-              <div class="section-heading">Advanced</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Enforce strict slugs <i class="i-icon">?</i></div>
-                  <div class="row-desc">Only allow the masked URL to access login</div>
-                </div>
-                <div class="toggle" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Allowed paths <i class="i-icon">?</i></div>
-                  <div class="row-desc">Paths excluded from login masking</div>
-                </div>
-                <div class="toggle" onclick="this.classList.toggle('on')"></div>
-              </div>
-            </div>
-          </div>
-          <div class="save-bar">
-            <button class="btn btn-ghost">Cancel</button>
-            <button class="btn btn-blue">Save Changes</button>
-          </div>
-        </div>
-
-        <!-- TWO-FACTOR AUTH -->
-        <div class="content" id="tab-2fa">
-          <!-- Header -->
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-            <div style="font-size:15px;font-weight:600;color:var(--text-dark);">Two-Factor Authentication</div>
-          </div>
-          <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Configure your two-factor authentication settings. Our recommendations are enabled by default.</p>
-
-          <div class="notice notice-blue">
-            ℹ Two-factor authentication is now active. User roles with this feature enabled must visit their <a href="#" style="color:#286EFA;font-weight:500;">Profile page</a> to finish setting up.
-          </div>
-
-          <div class="content-grid">
-            <div class="content-col">
-              <!-- User Roles -->
-              <div class="section-heading">User Roles</div>
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Choose the user roles you want to enable two-factor authentication for.</p>
-              <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-                <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">User Role</div>
-                <div class="row" style="padding:10px 16px;margin:0;">
-                  <div class="row-label">Administrator</div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row" style="padding:10px 16px;margin:0;">
-                  <div class="row-label">Editor</div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row" style="padding:10px 16px;margin:0;">
-                  <div class="row-label">Author</div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row" style="padding:10px 16px;margin:0;">
-                  <div class="row-label">Contributor</div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-                <div class="row" style="padding:10px 16px;margin:0;border-bottom:none;">
-                  <div class="row-label">Subscriber</div>
-                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                </div>
-              </div>
-
-              <!-- Force Authentication -->
-              <div class="section-heading">Force Authentication</div>
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">By default, two-factor authentication is optional for users. This setting forces users to activate two-factor.</p>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Force users to log in with two-factor authentication</div>
-                  <div class="row-desc">Note: Users will be forced to set up two-factor when they next login.</div>
-                </div>
-                <div class="toggle" onclick="this.classList.toggle('on')"></div>
-              </div>
-
-              <!-- App Title -->
-              <div class="section-heading">App Title</div>
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Customise the title that appears in the Authenticator app for this website.</p>
-              <div style="margin-bottom:4px;font-size:11px;color:var(--text-light);">Custom Title</div>
-              <input type="text" class="input" value="deftest-ikkk.tempurl.host" style="max-width:280px;">
-            </div>
-
-            <div class="content-col">
-              <!-- Custom Graphic -->
-              <div class="section-heading">Custom Graphic</div>
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">By default, Defender's icon appears above the login fields. You can upload your own branding, or turn this feature off.</p>
-              <div class="row">
-                <div class="row-label">Enable custom graphics above login fields</div>
-                <div class="toggle" onclick="this.classList.toggle('on')"></div>
-              </div>
-
-              <!-- Emails -->
-              <div class="section-heading">Emails</div>
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Customize the default copy for emails the two-factor feature sends to users.</p>
-              <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-                <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">Email</div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;">
-                  <span style="font-size:13px;color:var(--text-dark);">Fallback email one time password</span>
-                  <span style="color:#999;cursor:pointer;">✏️</span>
-                </div>
-              </div>
-
-              <!-- App Download -->
-              <div class="section-heading">App Download</div>
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Need the app? Here's links to the official iOS and Android authenticator applications.</p>
-              <select class="select" style="margin-bottom:10px;">
-                <option selected>Google Authenticator</option>
-                <option>Microsoft Authenticator</option>
-                <option>Authy</option>
-              </select>
-              <div style="display:flex;gap:8px;margin-top:6px;">
-                <div style="background:#111;color:white;padding:6px 14px;border-radius:6px;font-size:10px;display:flex;align-items:center;gap:4px;cursor:pointer;"> App Store</div>
-                <div style="background:#111;color:white;padding:6px 14px;border-radius:6px;font-size:10px;display:flex;align-items:center;gap:4px;cursor:pointer;">▶ Google Play</div>
-              </div>
-
-              <!-- WooCommerce -->
-              <div class="section-heading">WooCommerce</div>
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Enable this option to allow users to configure two-factor authentication from WooCommerce "My Account" page.</p>
-              <div class="row">
-                <div class="row-label">Enable two-factor authentication for WooCommerce</div>
-                <div class="toggle" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="notice notice-blue" style="margin-top:8px;padding:8px 12px;">
-                ℹ WooCommerce must be active to use this feature.
-              </div>
-
-              <!-- Active Users -->
-              <div class="section-heading">Active Users</div>
-              <p style="font-size:12px;color:var(--text-light);">Here's a quick link to see which of your users have enabled two-factor authentication.</p>
-              <a href="#" style="font-size:12px;color:var(--blue);font-weight:500;text-decoration:none;">View users</a> <span style="font-size:12px;color:var(--text-light);">who have enabled this feature.</span>
-            </div>
-          </div>
-
-          <!-- Bottom bar -->
-          <div class="save-bar" style="justify-content:space-between;">
-            <button class="btn btn-ghost">↻ DEACTIVATE</button>
-            <button class="btn btn-blue">💾 SAVE CHANGES</button>
-          </div>
-        </div>
-
-        <!-- PASSWORD RULES -->
-        <div class="content" id="tab-password">
-          <div class="content-grid">
-            <div class="content-col">
-              <div class="section-heading">Strength requirements</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Enforce strong passwords <i class="i-icon">?</i></div>
-                  <div class="row-desc">Require complex passwords for all users</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Minimum length</div>
-                </div>
-                <select class="select">
-                  <option selected>8 characters</option>
-                  <option>10 characters</option>
-                  <option>12 characters</option>
-                  <option>16 characters</option>
-                </select>
-              </div>
-            </div>
-            <div class="content-col">
-              <div class="section-heading">Breach protection</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Detect compromised passwords <i class="i-icon">?</i></div>
-                  <div class="row-desc">Check against known data breaches</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Force password reset <i class="i-icon">?</i></div>
-                  <div class="row-desc">Require users to change compromised passwords</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-            </div>
-          </div>
-          <div class="save-bar">
-            <button class="btn btn-ghost">Cancel</button>
-            <button class="btn btn-blue">Save Changes</button>
-          </div>
-        </div>
-
-        <!-- SESSION PROTECTION -->
-        <div class="content" id="tab-session">
-          <div class="content-grid">
-            <div class="content-col">
-              <div class="section-heading">Idle timeout</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Enable idle timeout <i class="i-icon">?</i></div>
-                  <div class="row-desc">Auto-logout after inactivity</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Timeout duration</div>
-                </div>
-                <select class="select">
-                  <option>15 minutes</option>
-                  <option selected>30 minutes</option>
-                  <option>60 minutes</option>
-                  <option>120 minutes</option>
-                </select>
-              </div>
-
-              <div class="section-heading">Login duration</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">"Remember Me" duration <i class="i-icon">?</i></div>
-                  <div class="row-desc">Override default 14-day WordPress setting</div>
-                </div>
-                <select class="select">
-                  <option>1 day</option>
-                  <option>3 days</option>
-                  <option>7 days</option>
-                  <option selected>14 days (default)</option>
-                </select>
-              </div>
-            </div>
-            <div class="content-col">
-              <div class="section-heading">Session validation</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Lock session to IP <i class="i-icon">?</i></div>
-                  <div class="row-desc">Invalidate if IP changes mid-session</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Lock session to browser <i class="i-icon">?</i></div>
-                  <div class="row-desc">Invalidate if user agent changes</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-            </div>
-          </div>
-          <div class="save-bar">
-            <button class="btn btn-ghost">Cancel</button>
-            <button class="btn btn-blue">Save Changes</button>
-          </div>
-        </div>
-
-        <!-- CAPTCHA -->
-        <div class="content" id="tab-captcha">
-          <!-- Header -->
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-            <div style="font-size:15px;font-weight:600;color:var(--text-dark);">CAPTCHA</div>
-            <span class="captcha-active-badge" style="font-size:10px;font-weight:600;padding:3px 10px;border-radius:3px;background:#FFF6ED;color:#FF6D00;border:1px solid #FFD9B3;">reCAPTCHA</span>
-          </div>
-          <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">Set up a human verification system to keep malicious software from engaging in abusive activities on your website while helping your legitimate users to enter with ease.</p>
-
-          <div class="notice notice-orange">
-            ⚠ Configure a CAPTCHA provider to verify users and prevent automated bots. Both reCAPTCHA and Cloudflare Turnstile are supported.
-          </div>
-
-          <!-- Provider Sub-tabs -->
-          <div style="display:flex;gap:0;border-bottom:2px solid var(--border-light);margin-bottom:24px;">
-            <div class="captcha-provider active-provider" data-provider="recaptcha" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--blue);border-bottom:2px solid var(--blue);margin-bottom:-2px;cursor:pointer;display:flex;align-items:center;gap:6px;">
-              <span style="font-size:14px;">🔵</span> RECAPTCHA
-            </div>
-            <div class="captcha-provider" data-provider="turnstile" style="padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-light);border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;display:flex;align-items:center;gap:6px;">
-              <span style="font-size:14px;">🟠</span> CLOUDFLARE TURNSTILE
-            </div>
-          </div>
-
-          <!-- ======= RECAPTCHA PANEL ======= -->
-          <div class="captcha-panel" id="captcha-recaptcha">
-            <!-- reCAPTCHA Type Selector -->
-            <div class="section-heading">reCAPTCHA type</div>
-            <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">Select a reCAPTCHA type and enter the API keys. Note that each reCAPTCHA type requires a different set of API keys.</p>
-            <a href="#" style="font-size:12px;color:var(--blue);text-decoration:none;font-weight:500;">Generate API keys.</a>
-
-            <div style="display:flex;gap:0;margin-top:14px;margin-bottom:20px;">
-              <div class="recaptcha-type active-recaptcha-type" data-rtype="v2checkbox" style="padding:8px 20px;font-size:12px;font-weight:500;border:1px solid var(--border);cursor:pointer;border-radius:4px 0 0 4px;color:var(--blue);background:var(--blue-bg);border-color:var(--blue);">V2 Checkbox</div>
-              <div class="recaptcha-type" data-rtype="v2invisible" style="padding:8px 20px;font-size:12px;font-weight:500;border:1px solid var(--border);border-left:none;cursor:pointer;color:var(--text-mid);background:white;">V2 Invisible</div>
-              <div class="recaptcha-type" data-rtype="v3" style="padding:8px 20px;font-size:12px;font-weight:500;border:1px solid var(--border);border-left:none;cursor:pointer;border-radius:0 4px 4px 0;color:var(--text-mid);background:white;">reCAPTCHA V3</div>
-            </div>
-
-            <!-- API Keys -->
-            <div style="background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:20px;">
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:14px;">Enter the API keys for reCAPTCHA v2 Checkbox type below.</p>
-              <div style="margin-bottom:12px;">
-                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Site key</div>
-                <input type="text" class="input" placeholder="Enter your site key">
-              </div>
-              <div>
-                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Secret key</div>
-                <input type="text" class="input" placeholder="Enter your secret key">
-              </div>
-            </div>
-
-            <div class="content-grid">
-              <div class="content-col">
-                <!-- Widget Settings -->
-                <div class="section-heading">Widget Settings</div>
-                <div style="display:flex;gap:16px;margin-bottom:16px;">
-                  <div style="flex:1;">
-                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Size</div>
-                    <select class="select" style="width:100%;">
-                      <option selected>Normal</option>
-                      <option>Compact</option>
-                    </select>
-                  </div>
-                  <div style="flex:1;">
-                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Theme</div>
-                    <select class="select" style="width:100%;">
-                      <option selected>Light</option>
-                      <option>Dark</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Widget Preview -->
-                <div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px;">reCAPTCHA widget preview</div>
-                <div style="border:1px solid var(--border);border-radius:6px;padding:20px;background:#FAFAFA;margin-bottom:6px;text-align:center;">
-                  <div style="display:inline-flex;align-items:center;gap:10px;background:white;border:1px solid #D3D3D3;border-radius:4px;padding:10px 16px;">
-                    <div style="width:22px;height:22px;border:2px solid #C1C1C1;border-radius:3px;"></div>
-                    <span style="font-size:13px;color:#555;">I'm not a robot</span>
-                    <div style="text-align:center;margin-left:16px;">
-                      <div style="font-size:16px;color:#4285F4;">↻</div>
-                      <div style="font-size:7px;color:#999;margin-top:1px;">reCAPTCHA</div>
-                    </div>
-                  </div>
-                </div>
-                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">If you see any errors in the preview, make sure the keys you've entered are valid, and you've listed your domain name while generating the keys.</p>
-
-                <!-- Error Message -->
-                <div class="section-heading">Error Message</div>
-                <input type="text" class="input" value="reCAPTCHA verification failed. Please try again." style="margin-bottom:6px;">
-                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">Choose the error message you want to display on your form when reCAPTCHA verification fails.</p>
-
-                <!-- Language -->
-                <div class="section-heading">Language</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">By default, we'll show the CAPTCHA in your website's language.</p>
-                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Language</div>
-                <select class="select">
-                  <option selected>Automatic</option>
-                  <option>English</option>
-                  <option>Spanish</option>
-                  <option>French</option>
-                  <option>German</option>
-                </select>
-              </div>
-
-              <div class="content-col">
-                <!-- CAPTCHA Locations -->
-                <div class="section-heading">CAPTCHA Locations</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Choose the forms for which CAPTCHA human verification system will be deployed.</p>
-                <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-                  <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">Locations</div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Login</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Register</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Lost Password</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Comment Form</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;border-bottom:none;">
-                    <div class="row-label">WooCommerce Checkout</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                </div>
-                <div class="notice notice-blue" style="margin-top:10px;padding:8px 12px;">
-                  ℹ BuddyPress must be active to validate visitors to your BuddyPress pages.
-                </div>
-
-                <!-- Disable for logged in users -->
-                <div class="section-heading">Logged-in Users</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Disable reCAPTCHA for logged in users.</p>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="chk on" style="cursor:pointer;" onclick="this.classList.toggle('on')">✓</div>
-                  <span style="font-size:13px;color:var(--text-dark);">Disable reCAPTCHA verification for logged in users</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ======= CLOUDFLARE TURNSTILE PANEL ======= -->
-          <div class="captcha-panel" id="captcha-turnstile" style="display:none;">
-            <div class="section-heading">Cloudflare Turnstile</div>
-            <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">Turnstile delivers frustration-free, CAPTCHA-free web experiences. Create a free Cloudflare account and get your API keys.</p>
-            <a href="#" style="font-size:12px;color:var(--blue);text-decoration:none;font-weight:500;">Get Turnstile API keys →</a>
-
-            <!-- API Keys -->
-            <div style="background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:20px;margin:16px 0 20px;">
-              <p style="font-size:12px;color:var(--text-light);margin-bottom:14px;">Enter the API keys for Cloudflare Turnstile below.</p>
-              <div style="margin-bottom:12px;">
-                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Site key</div>
-                <input type="text" class="input" placeholder="Enter your Turnstile site key">
-              </div>
-              <div>
-                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Secret key</div>
-                <input type="text" class="input" placeholder="Enter your Turnstile secret key">
-              </div>
-            </div>
-
-            <div class="content-grid">
-              <div class="content-col">
-                <!-- Widget Settings -->
-                <div class="section-heading">Widget Settings</div>
-                <div style="display:flex;gap:16px;margin-bottom:16px;">
-                  <div style="flex:1;">
-                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Widget Mode</div>
-                    <select class="select" style="width:100%;">
-                      <option selected>Managed</option>
-                      <option>Non-interactive</option>
-                      <option>Invisible</option>
-                    </select>
-                  </div>
-                  <div style="flex:1;">
-                    <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Theme</div>
-                    <select class="select" style="width:100%;">
-                      <option selected>Light</option>
-                      <option>Dark</option>
-                      <option>Auto</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Widget Preview -->
-                <div style="font-size:12px;font-weight:600;color:var(--text-dark);margin-bottom:6px;">Turnstile widget preview</div>
-                <div style="border:1px solid var(--border);border-radius:6px;padding:20px;background:#FAFAFA;margin-bottom:6px;text-align:center;">
-                  <div style="display:inline-flex;align-items:center;gap:10px;background:white;border:1px solid #D3D3D3;border-radius:4px;padding:12px 20px;">
-                    <div style="width:20px;height:20px;border:2px solid #F48120;border-radius:50%;display:flex;align-items:center;justify-content:center;">
-                      <div style="width:8px;height:8px;background:#F48120;border-radius:50%;"></div>
-                    </div>
-                    <span style="font-size:13px;color:#555;">Verifying you are human...</span>
-                    <div style="text-align:center;margin-left:12px;">
-                      <div style="font-size:8px;color:#999;">Cloudflare</div>
-                      <div style="font-size:7px;color:#BBB;">Turnstile</div>
-                    </div>
-                  </div>
-                </div>
-                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">Preview may not render if keys are missing. Ensure valid Turnstile site key is entered above.</p>
-
-                <!-- Error Message -->
-                <div class="section-heading">Error Message</div>
-                <input type="text" class="input" value="Turnstile verification failed. Please try again." style="margin-bottom:6px;">
-                <p style="font-size:11px;color:var(--text-light);margin-bottom:16px;">Choose the error message to display when Turnstile verification fails.</p>
-
-                <!-- Language -->
-                <div class="section-heading">Language</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:8px;">By default, we'll show Turnstile in your website's language.</p>
-                <div style="font-size:11px;color:var(--text-light);margin-bottom:4px;">Language</div>
-                <select class="select">
-                  <option selected>Automatic</option>
-                  <option>English</option>
-                  <option>Spanish</option>
-                  <option>French</option>
-                  <option>German</option>
-                </select>
-              </div>
-
-              <div class="content-col">
-                <!-- CAPTCHA Locations -->
-                <div class="section-heading">CAPTCHA Locations</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Choose the forms for which Turnstile verification will be deployed.</p>
-                <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-                  <div style="padding:10px 16px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:#666;">Locations</div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Login</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Register</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Lost Password</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;">
-                    <div class="row-label">Comment Form</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="row" style="padding:10px 16px;margin:0;border-bottom:none;">
-                    <div class="row-label">WooCommerce Checkout</div>
-                    <div class="toggle" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                </div>
-
-                <!-- Disable for logged in users -->
-                <div class="section-heading">Logged-in Users</div>
-                <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Disable Turnstile for logged in users.</p>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div class="chk on" style="cursor:pointer;" onclick="this.classList.toggle('on')">✓</div>
-                  <span style="font-size:13px;color:var(--text-dark);">Disable Turnstile verification for logged in users</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom bar -->
-          <div class="save-bar" style="justify-content:space-between;">
-            <button class="btn btn-ghost">↻ DEACTIVATE</button>
-            <button class="btn btn-blue">💾 SAVE CHANGES</button>
-          </div>
-        </div>
-
-        <!-- AUDIT LOGGING -->
-        <!-- NOTIFICATIONS -->
-        <div class="content" id="tab-notifications">
-          <div class="content-grid">
-            <div class="content-col">
-              <div class="section-heading">Scan reports</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Enable scan reports <i class="i-icon">?</i></div>
-                  <div class="row-desc">Email summaries of malware scans</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Report frequency</div>
-                </div>
-                <select class="select">
-                  <option>Daily</option>
-                  <option selected>Weekly</option>
-                  <option>Monthly</option>
-                </select>
-              </div>
-
-              <div class="section-heading">Firewall alerts</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Lockout notifications <i class="i-icon">?</i></div>
-                  <div class="row-desc">Alert on brute-force lockouts</div>
-                </div>
-                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-              </div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">IP blocklist changes <i class="i-icon">?</i></div>
-                  <div class="row-desc">Alert on blocklist additions</div>
-                </div>
-                <div class="toggle" onclick="this.classList.toggle('on')"></div>
-              </div>
-
-            </div>
-            <div class="content-col">
-              <div class="section-heading">Recipients</div>
-              <div class="recipient">
-                <div class="recipient-avatar" style="background:#286EFA">Y</div>
-                <div class="recipient-info">
-                  <div class="recipient-name">yudy@incsub.com</div>
-                  <div class="recipient-meta">Administrator · All notifications</div>
-                </div>
-                <span class="tag tag-green">Active</span>
-              </div>
-              <div class="recipient">
-                <div class="recipient-avatar" style="background:#1ABC9C">S</div>
-                <div class="recipient-info">
-                  <div class="recipient-name">satwik@wpmudev.com</div>
-                  <div class="recipient-meta">Administrator · Scan reports only</div>
-                </div>
-                <span class="tag tag-green">Active</span>
-              </div>
-              <div style="padding-top: 10px;">
-                <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">+ Add Recipient</button>
-              </div>
-
-              <div class="section-heading">Email settings</div>
-              <div class="row">
-                <div class="row-info">
-                  <div class="row-label">Sender email <i class="i-icon">?</i></div>
-                  <div class="row-desc">"From" address for all emails</div>
-                </div>
-                <input type="text" class="input" value="noreply@yoursite.com" style="max-width: 190px">
-              </div>
-            </div>
-          </div>
-          <div class="save-bar">
-            <button class="btn btn-ghost">Cancel</button>
-            <button class="btn btn-blue">Save Changes</button>
-          </div>
-        </div>
-
         <!-- SECURITY HEADERS -->
-        <div class="content" id="tab-headers">
+        <div class="content active" id="tab-headers">
           <div class="content-grid">
             <div class="content-col">
               <div class="section-heading">Response headers</div>
@@ -1798,6 +1388,240 @@
                 <div class="toggle" onclick="this.classList.toggle('on')"></div>
               </div>
             </div>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- ALERTS -->
+        <div class="content" id="tab-alerts">
+          <div class="notice notice-blue">ℹ Real-time alerts notify you immediately when security events occur. Configure which events trigger alerts and who receives them.</div>
+
+          <div class="section-heading">Firewall alerts</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Login lockout <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when an IP is locked out from brute-force attempts</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">404 lockout <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when an IP is locked out from 404 threshold</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">IP blocklist changes <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when an IP is added to the blocklist</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">User agent blocked <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when a user agent is blocked</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="section-heading">Malware scan alerts</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Threat detected <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when malware or suspicious code is found</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">File modified <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when core/plugin files are modified unexpectedly</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Vulnerability found <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when a known CVE is detected in installed components</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="section-heading">Audit log alerts</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">User role changes <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when a user's role is promoted or changed</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Plugin/theme installed <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when new plugins or themes are installed</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Settings modified <i class="i-icon">?</i></div>
+              <div class="row-desc">Alert when critical WordPress options are changed</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="divider" style="margin:20px 0"></div>
+
+          <div class="section-heading">Alert recipients</div>
+          <p style="font-size:12px;color:#888;margin-bottom:12px;">These people will receive real-time alert emails when triggered events occur.</p>
+          <div class="recipient">
+            <div class="recipient-avatar" style="background:#E74C3C">A</div>
+            <div class="recipient-info">
+              <div class="recipient-name">admin@yoursite.com</div>
+              <div class="recipient-meta">Administrator · All alerts</div>
+            </div>
+            <span class="tag tag-green">Active</span>
+          </div>
+          <div class="recipient">
+            <div class="recipient-avatar" style="background:#286EFA">Y</div>
+            <div class="recipient-info">
+              <div class="recipient-name">yudy@incsub.com</div>
+              <div class="recipient-meta">Administrator · Firewall + Malware alerts only</div>
+            </div>
+            <span class="tag tag-green">Active</span>
+          </div>
+          <div style="padding-top: 10px;">
+            <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">+ Add Recipient</button>
+          </div>
+
+          <div class="section-heading">Alert delivery</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Sender email <i class="i-icon">?</i></div>
+              <div class="row-desc">"From" address for alert emails</div>
+            </div>
+            <input type="text" class="input" value="alerts@yoursite.com" style="max-width: 190px">
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Cooldown period <i class="i-icon">?</i></div>
+              <div class="row-desc">Prevent alert flooding — min time between same-type alerts</div>
+            </div>
+            <select class="select">
+              <option>No cooldown</option>
+              <option selected>5 minutes</option>
+              <option>15 minutes</option>
+              <option>1 hour</option>
+            </select>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- REPORTS -->
+        <div class="content" id="tab-reports">
+          <div class="notice notice-green">✓ Scheduled reports provide periodic summaries of your site's security status. Configure what's included and who receives them.</div>
+
+          <div class="section-heading">Malware scan report</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Enable scan reports <i class="i-icon">?</i></div>
+              <div class="row-desc">Periodic email summaries of malware scan results</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Frequency</div>
+            </div>
+            <select class="select"><option>Daily</option><option selected>Weekly</option><option>Monthly</option></select>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Day & Time</div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <select class="select" style="min-width:100px"><option selected>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select>
+              <select class="select" style="min-width:80px"><option>6:00 AM</option><option selected>9:00 AM</option><option>12:00 PM</option><option>6:00 PM</option></select>
+            </div>
+          </div>
+
+          <div class="section-heading">Firewall report</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Enable firewall reports <i class="i-icon">?</i></div>
+              <div class="row-desc">Summary of blocked IPs, lockouts, and 404 detections</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Frequency</div>
+            </div>
+            <select class="select"><option>Daily</option><option selected>Weekly</option><option>Monthly</option></select>
+          </div>
+
+          <div class="section-heading">Audit log report</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Enable audit log reports <i class="i-icon">?</i></div>
+              <div class="row-desc">Summary of user actions, content changes, and system events</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Frequency</div>
+            </div>
+            <select class="select"><option>Daily</option><option selected>Weekly</option><option>Monthly</option></select>
+          </div>
+
+          <div class="divider" style="margin:20px 0"></div>
+
+          <div class="section-heading">Report recipients</div>
+          <p style="font-size:12px;color:#888;margin-bottom:12px;">These people will receive scheduled report emails on the configured frequency.</p>
+          <div class="recipient">
+            <div class="recipient-avatar" style="background:#1ABC9C">S</div>
+            <div class="recipient-info">
+              <div class="recipient-name">satwik@wpmudev.com</div>
+              <div class="recipient-meta">Administrator · All reports</div>
+            </div>
+            <span class="tag tag-green">Active</span>
+          </div>
+          <div class="recipient">
+            <div class="recipient-avatar" style="background:#286EFA">Y</div>
+            <div class="recipient-info">
+              <div class="recipient-name">yudy@incsub.com</div>
+              <div class="recipient-meta">Administrator · Malware scan report only</div>
+            </div>
+            <span class="tag tag-green">Active</span>
+          </div>
+          <div class="recipient">
+            <div class="recipient-avatar" style="background:#9B59B6">M</div>
+            <div class="recipient-info">
+              <div class="recipient-name">manager@client.com</div>
+              <div class="recipient-meta">Custom email · Firewall report only</div>
+            </div>
+            <span class="tag tag-green">Active</span>
+          </div>
+          <div style="padding-top: 10px;">
+            <button class="btn btn-outline" style="font-size:11px;padding:5px 12px">+ Add Recipient</button>
+          </div>
+
+          <div class="section-heading">Report delivery</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Sender email <i class="i-icon">?</i></div>
+              <div class="row-desc">"From" address for report emails</div>
+            </div>
+            <input type="text" class="input" value="reports@yoursite.com" style="max-width: 190px">
           </div>
           <div class="save-bar">
             <button class="btn btn-ghost">Cancel</button>
