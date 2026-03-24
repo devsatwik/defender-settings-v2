@@ -909,8 +909,6 @@
             <div class="fw-tab" data-fw="fw-password">Password Rules</div>
             <div class="fw-tab" data-fw="fw-session">Session Protection</div>
             <div class="fw-tab" data-fw="fw-captcha">CAPTCHA</div>
-            <div class="fw-section-label">Firewall Settings</div>
-            <div class="fw-tab" data-fw="fw-settings">Settings</div>
           </div>
           <!-- AntiBot content -->
           <div class="fw-content active" id="fw-antibot">
@@ -1018,34 +1016,6 @@
             </div>
           </div>
           <!-- FW Settings -->
-          <div class="fw-content" id="fw-fw-settings">
-            <div class="section-heading">Firewall Settings</div>
-            <div class="row">
-              <div class="row-info">
-                <div class="row-label">IP detection method <i class="i-icon">?</i></div>
-                <div class="row-desc">HTTP header used to identify visitor IPs</div>
-              </div>
-              <select class="select"><option selected>REMOTE_ADDR</option><option>HTTP_X_FORWARDED_FOR</option><option>HTTP_X_REAL_IP</option></select>
-            </div>
-            <div class="row">
-              <div class="row-info">
-                <div class="row-label">Log retention <i class="i-icon">?</i></div>
-                <div class="row-desc">How long to keep firewall logs</div>
-              </div>
-              <select class="select"><option>7 days</option><option selected>30 days</option><option>90 days</option></select>
-            </div>
-            <div class="row">
-              <div class="row-info">
-                <div class="row-label">Send logs to API <i class="i-icon">?</i></div>
-                <div class="row-desc">Share anonymous threat data to improve AntiBot</div>
-              </div>
-              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-            </div>
-            <div class="save-bar">
-              <button class="btn btn-ghost">Cancel</button>
-              <button class="btn btn-blue">Save Changes</button>
-            </div>
-          </div>
           <!-- Mask Login Area (under Firewall) -->
           <div class="fw-content" id="fw-fw-mask-login">
             <div class="section-heading">Configuration</div>
