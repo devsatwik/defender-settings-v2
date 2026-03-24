@@ -792,7 +792,10 @@
         <div class="ia-item"><span class="dot dot-orange"></span> Security Headers</div>
       </div>
       <div class="ia-group">
-        <div class="ia-group-label">Settings → Alerts & Reports</div>
+        <div class="ia-group-label">Settings → Module Settings</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> Firewall Settings</div>
+        <div class="ia-item"><span class="dot dot-blue"></span> Scan Settings</div>
+        <div style="margin-top:8px;"><div class="ia-group-label">Settings → Alerts & Reports</div></div>
         <div class="ia-item"><span class="dot dot-green"></span> Alerts</div>
         <div class="ia-item"><span class="dot dot-green"></span> Reports</div>
       </div>
@@ -1302,6 +1305,18 @@
 
           <div class="divider"></div>
 
+          <div class="section-label">Module Settings</div>
+          <div class="tab" data-tab="firewall-settings">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            Firewall Settings
+          </div>
+          <div class="tab" data-tab="scan-settings">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            Scan Settings
+          </div>
+
+          <div class="divider"></div>
+
           <div class="section-label">Alerts & Reports</div>
           <div class="tab" data-tab="alerts">
             <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
@@ -1389,6 +1404,130 @@
               </div>
             </div>
           </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- FIREWALL SETTINGS -->
+        <div class="content" id="tab-firewall-settings">
+          <div class="section-heading">Detect IP Addresses</div>
+          <p style="font-size:12px;color:#888;margin-bottom:12px;">Select the method the plugin should use to detect your site visitors' IP addresses. For more information about these methods, see our <a href="#" style="color:var(--blue);">documentation</a>.</p>
+          <div style="display:flex;gap:8px;margin-bottom:16px;">
+            <div style="padding:8px 18px;border:1px solid var(--blue);border-radius:4px;font-size:12px;color:var(--blue);font-weight:500;cursor:pointer;background:var(--blue-bg);">Automatic (Recommended)</div>
+            <div style="padding:8px 18px;border:1px solid var(--border);border-radius:4px;font-size:12px;color:#666;cursor:pointer;">Manual IP Detection</div>
+          </div>
+          <div class="notice notice-blue">ℹ The most secure method to detect visitors' IP addresses will be chosen automatically. This prevents spoofing and is compatible with most sites.</div>
+
+          <div class="section-heading">Clear Temporary IP Block List</div>
+          <p style="font-size:12px;color:#888;margin-bottom:8px;">Choose how frequently you want the Temporary IP Block List to be automatically cleared.</p>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Clear list</div>
+            </div>
+            <select class="select"><option selected>Never</option><option>Daily</option><option>Weekly</option><option>Monthly</option></select>
+          </div>
+
+          <div class="section-heading">Logs Storage</div>
+          <p style="font-size:12px;color:#888;margin-bottom:8px;">Event logs are cached on your local server to speed up load times. Choose how many days of event logs you'd like to store locally.</p>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Storage duration</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" class="input" value="30" style="max-width:70px;text-align:center;">
+              <span style="font-size:12px;color:#888;">days</span>
+            </div>
+          </div>
+
+          <div class="section-heading">Data management</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Delete logs</div>
+              <div class="row-desc">Instantly remove all past event logs. This cannot be undone.</div>
+            </div>
+            <button class="btn-restore">🗑 DELETE LOGS</button>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Delete lockouts</div>
+              <div class="row-desc">Permanently remove all lockout records. All locked-out users will be able to access your site again.</div>
+            </div>
+            <button class="btn-restore">🗑 DELETE LOCKOUTS</button>
+          </div>
+          <div class="save-bar">
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- SCAN SETTINGS -->
+        <div class="content" id="tab-scan-settings">
+          <div class="section-heading">Scan Types</div>
+          <p style="font-size:12px;color:#888;margin-bottom:16px;">Choose the scan types you would like to include in your default scan. It's recommended you enable all types.</p>
+
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">File change detection <i class="i-icon">?</i></div>
+              <div class="row-desc">Checks for any modifications or additions to your core and plugins, comparing them with those in the official WP repository.</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div style="background:#FAFAFA;border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin:8px 0 16px;margin-left:24px;">
+            <p style="font-size:12px;color:#666;margin-bottom:10px;">Select which types of files you want to be checked:</p>
+            <div class="role-item" style="margin-bottom:6px;"><div class="chk on">✓</div> Scan core files</div>
+            <div class="role-item"><div class="chk on">✓</div> Scan plugin files</div>
+            <p style="font-size:11px;color:#AAA;margin-top:8px;">Note: At least one of the types of files above needs to be included.</p>
+          </div>
+
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Outdated & removed plugins <i class="i-icon">?</i></div>
+              <div class="row-desc">Checks if any installed plugin has been removed from the WordPress repository or hasn't received updates in the past 2 years.</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Known vulnerabilities <i class="i-icon">?</i></div>
+              <div class="row-desc">Search installed components against known CVE databases for published security vulnerabilities.</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Suspicious code <i class="i-icon">?</i></div>
+              <div class="row-desc">Defender looks inside all of your site's files to detect suspicious and potentially harmful code. Some plugins can use risky code but please consult with the developers before removing the file.</div>
+            </div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="section-heading">Scheduled Scanning</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Enable scheduled scanning <i class="i-icon">?</i></div>
+              <div class="row-desc">Configure Defender to automatically run regular scans of your website.</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+
+          <div class="section-heading">Scan limits</div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Max included file size <i class="i-icon">?</i></div>
+              <div class="row-desc">Defender will skip any files larger than this size. The smaller this number is, the faster Defender can scan through your system.</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" class="input" value="10" style="max-width:70px;text-align:center;">
+              <span style="font-size:12px;color:#888;">MB</span>
+            </div>
+          </div>
+
+          <div class="notice notice-green" style="margin-top:16px;">✓ Great! Access to the quarantine folder is forbidden.</div>
+
           <div class="save-bar">
             <button class="btn btn-ghost">Cancel</button>
             <button class="btn btn-blue">Save Changes</button>
