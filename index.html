@@ -1228,6 +1228,10 @@
             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             Scan Settings
           </div>
+          <div class="tab" data-tab="audit-log-settings">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            Audit Logging
+          </div>
 
           <div class="divider"></div>
 
@@ -1444,6 +1448,39 @@
 
           <div class="save-bar">
             <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-blue">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- AUDIT LOGGING SETTINGS -->
+        <div class="content" id="tab-audit-log-settings">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;border-bottom:1px solid var(--border-light);margin-bottom:20px;">
+            <div>
+              <div class="section-heading" style="margin-top:0;">Storage</div>
+              <p style="font-size:13px;color:var(--text-light);max-width:260px;line-height:1.6;">Events are stored in our API. You can choose how many days to keep logs for before they are removed.</p>
+            </div>
+            <div>
+              <select class="select" style="min-width:180px;">
+                <option>30 days</option>
+                <option>3 months</option>
+                <option selected>6 months</option>
+                <option>12 months</option>
+              </select>
+              <p style="font-size:12px;color:var(--text-light);margin-top:8px;max-width:300px;">Choose how long you'd like to store your event logs locally before wiping the oldest.</p>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:20px;border-bottom:1px solid var(--border-light);margin-bottom:20px;">
+            <div>
+              <div class="section-heading" style="margin-top:0;">Deactivate</div>
+              <p style="font-size:13px;color:var(--text-light);max-width:260px;line-height:1.6;">If you no longer want to use this feature you can turn it off at any time.</p>
+            </div>
+            <div>
+              <button class="btn btn-ghost" style="text-transform:uppercase;font-size:11px;letter-spacing:0.5px;">⏻ Deactivate</button>
+            </div>
+          </div>
+
+          <div class="save-bar">
             <button class="btn btn-blue">Save Changes</button>
           </div>
         </div>
