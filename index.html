@@ -1492,22 +1492,29 @@
           <div class="section-heading">Firewall alerts</div>
           <div class="row">
             <div class="row-info">
-              <div class="row-label">Login lockout <i class="i-icon">?</i></div>
-              <div class="row-desc">Alert when an IP is locked out from brute-force attempts</div>
+              <div class="row-label">Login Protection Lockout <i class="i-icon">?</i></div>
+              <div class="row-desc">When a user or IP is locked out for trying to access your login area</div>
             </div>
             <div class="toggle on" onclick="this.classList.toggle('on')"></div>
           </div>
           <div class="row">
             <div class="row-info">
-              <div class="row-label">404 lockout <i class="i-icon">?</i></div>
-              <div class="row-desc">Alert when an IP is locked out from 404 threshold</div>
+              <div class="row-label">404 Detection Lockout <i class="i-icon">?</i></div>
+              <div class="row-desc">When a user or IP is locked out for repeated hits on non-existent files</div>
             </div>
             <div class="toggle on" onclick="this.classList.toggle('on')"></div>
           </div>
           <div class="row">
             <div class="row-info">
-              <div class="row-label">User agent blocked <i class="i-icon">?</i></div>
-              <div class="row-desc">Alert when a user agent is blocked</div>
+              <div class="row-label">User Agent Lockout <i class="i-icon">?</i></div>
+              <div class="row-desc">When a user is locked out for trying to access your site using a banned user agent</div>
+            </div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              <div class="row-label">Limit email notifications for repeat lockouts <i class="i-icon">?</i></div>
+              <div class="row-desc">If you're getting too many emails from IPs who are repeatedly being locked out, you can turn them off for a period of time</div>
             </div>
             <div class="toggle" onclick="this.classList.toggle('on')"></div>
           </div>
