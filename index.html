@@ -1542,29 +1542,6 @@
             <div class="toggle on" onclick="this.classList.toggle('on')"></div>
           </div>
 
-          <div class="section-heading">Audit log alerts</div>
-          <div class="row">
-            <div class="row-info">
-              <div class="row-label">User role changes <i class="i-icon">?</i></div>
-              <div class="row-desc">Alert when a user's role is promoted or changed</div>
-            </div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="row">
-            <div class="row-info">
-              <div class="row-label">Plugin/theme installed <i class="i-icon">?</i></div>
-              <div class="row-desc">Alert when new plugins or themes are installed</div>
-            </div>
-            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-          </div>
-          <div class="row">
-            <div class="row-info">
-              <div class="row-label">Settings modified <i class="i-icon">?</i></div>
-              <div class="row-desc">Alert when critical WordPress options are changed</div>
-            </div>
-            <div class="toggle" onclick="this.classList.toggle('on')"></div>
-          </div>
-
           <div class="section-heading">Hardening alerts</div>
           <div class="row">
             <div class="row-info">
@@ -1679,7 +1656,24 @@
             <div class="row-info">
               <div class="row-label">Frequency</div>
             </div>
-            <select class="select"><option>Daily</option><option selected>Weekly</option><option>Monthly</option></select>
+            <div style="display:flex;gap:6px;">
+              <button class="btn btn-ghost" style="font-size:12px;padding:5px 12px">Daily</button>
+              <button class="btn btn-blue" style="font-size:12px;padding:5px 12px">Weekly</button>
+              <button class="btn btn-ghost" style="font-size:12px;padding:5px 12px">Monthly</button>
+            </div>
+          </div>
+          <div style="background:#f9f9f9;border:1px solid #eee;border-radius:8px;padding:16px;margin:8px 0 4px;">
+            <div style="display:flex;gap:24px;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:11px;color:#888;margin-bottom:6px;">Day of the week</div>
+                <select class="select" style="min-width:130px"><option>Sunday</option><option selected>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option></select>
+              </div>
+              <div>
+                <div style="font-size:11px;color:#888;margin-bottom:6px;">Time of day</div>
+                <select class="select" style="min-width:110px"><option>12:00 AM</option><option selected>04:00 AM</option><option>06:00 AM</option><option>09:00 AM</option><option>12:00 PM</option><option>06:00 PM</option></select>
+              </div>
+            </div>
+            <div style="font-size:11px;color:#aaa;margin-top:10px;">Your timezone is set to +00:00, so your current time is 16:25.</div>
           </div>
 
           <div class="divider" style="margin:20px 0"></div>
