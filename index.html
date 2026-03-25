@@ -813,7 +813,7 @@
   <div class="spec-section">
     <h3>2 — Sidebar Tab Order & Rationale</h3>
     <div class="rationale">
-      <strong>1. Access & Authentication under Firewalls</strong> — login security (Mask Login, 2FA, Password Rules, Session Protection, CAPTCHA) is fundamentally about controlling access to the site. Placing these under the Firewalls page groups all protective barriers together — both network-level (IP blocking, 404 detection) and application-level (login masking, 2FA). Admins think: "How do I protect my site?" → Firewalls.<br><br>
+      <strong>1. Login as its own top-level menu</strong> — login security (Mask Login, 2FA, Password Rules, Session Protection, CAPTCHA) is the #1 admin concern. Making it a dedicated menu item gives it the prominence it deserves, separate from network-level Firewall rules. Admins think: "How do users get in?" → Login.<br><br>
       <strong>2. Security Policies (Settings)</strong> — HTTP security headers are a distinct, set-once concern. Isolated under Settings for clean separation from active firewall rules.<br><br>
       <strong>3. Alerts & Reports split</strong> — Alerts are real-time event-driven notifications (lockouts, threats, file changes). Reports are scheduled periodic summaries (weekly scans, firewall stats). Each has its own recipients because the person who handles emergencies (CTO/DevOps) is often different from whoever reviews weekly reports (Project Manager/Client).<br><br>
       <strong>4. General/Configs/Data/Accessibility</strong> — plugin-level meta-settings at the bottom, matching the WPMU DEV ecosystem pattern (Smush, Hummingbird, etc.).
@@ -840,6 +840,7 @@
       <div class="wp-nav-item" data-page="hardening">Hardening</div>
       <div class="wp-nav-item" data-page="audit">Audit Log</div>
       <div class="wp-nav-item" data-page="firewalls">Firewalls</div>
+      <div class="wp-nav-item" data-page="login">Login</div>
       <div class="wp-nav-item active" data-page="settings">Settings</div>
     </div>
 
@@ -903,12 +904,6 @@
             <div class="fw-tab" data-fw="404-detect">404 Detection</div>
             <div class="fw-tab" data-fw="ua-banning">User Agent Banning</div>
             <div class="fw-tab" data-fw="fw-logs">Logs</div>
-            <div class="fw-section-label">Access & Authentication</div>
-            <div class="fw-tab" data-fw="fw-mask-login">Mask Login Area</div>
-            <div class="fw-tab" data-fw="fw-2fa">Two-Factor Auth</div>
-            <div class="fw-tab" data-fw="fw-password">Password Rules</div>
-            <div class="fw-tab" data-fw="fw-session">Session Protection</div>
-            <div class="fw-tab" data-fw="fw-captcha">CAPTCHA</div>
           </div>
           <!-- AntiBot content -->
           <div class="fw-content active" id="fw-antibot">
@@ -1017,7 +1012,22 @@
           </div>
           <!-- FW Settings -->
           <!-- Mask Login Area (under Firewall) -->
-          <div class="fw-content" id="fw-fw-mask-login">
+        </div><!-- /fw-layout -->
+      </div>
+
+      <!-- ===== LOGIN PAGE ===== -->
+      <div class="page-view" id="page-login">
+        <div class="page-view-title">Login</div>
+        <div class="fw-layout">
+          <div class="fw-sidebar">
+            <div class="fw-tab active" data-login="ln-mask-login">Mask Login Area</div>
+            <div class="fw-tab" data-login="ln-2fa">Two-Factor Auth</div>
+            <div class="fw-tab" data-login="ln-password">Password Rules</div>
+            <div class="fw-tab" data-login="ln-session">Session Protection</div>
+            <div class="fw-tab" data-login="ln-captcha">CAPTCHA</div>
+          </div>
+          <!-- Mask Login Area -->
+          <div class="fw-content active" id="login-ln-mask-login">
             <div class="section-heading">Configuration</div>
             <div class="row">
               <div class="row-info">
@@ -1052,8 +1062,8 @@
               <button class="btn btn-blue">Save Changes</button>
             </div>
           </div>
-          <!-- Two-Factor Auth (under Firewall) -->
-          <div class="fw-content" id="fw-fw-2fa">
+          <!-- Two-Factor Auth -->
+          <div class="fw-content" id="login-ln-2fa">
             <div class="section-heading">User Roles</div>
             <p style="font-size:12px;color:#888;margin-bottom:10px;">Choose the user roles to enable two-factor authentication for.</p>
             <div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:20px;">
@@ -1107,8 +1117,8 @@
               <button class="btn btn-blue">Save Changes</button>
             </div>
           </div>
-          <!-- Password Rules (under Firewall) -->
-          <div class="fw-content" id="fw-fw-password">
+          <!-- Password Rules -->
+          <div class="fw-content" id="login-ln-password">
             <div class="section-heading">Strength requirements</div>
             <div class="row">
               <div class="row-info">
@@ -1143,8 +1153,8 @@
               <button class="btn btn-blue">Save Changes</button>
             </div>
           </div>
-          <!-- Session Protection (under Firewall) -->
-          <div class="fw-content" id="fw-fw-session">
+          <!-- Session Protection -->
+          <div class="fw-content" id="login-ln-session">
             <div class="section-heading">Idle timeout</div>
             <div class="row">
               <div class="row-info">
@@ -1187,8 +1197,8 @@
               <button class="btn btn-blue">Save Changes</button>
             </div>
           </div>
-          <!-- CAPTCHA (under Firewall) -->
-          <div class="fw-content" id="fw-fw-captcha">
+          <!-- CAPTCHA -->
+          <div class="fw-content" id="login-ln-captcha">
             <div class="section-heading">CAPTCHA Provider</div>
             <div class="notice notice-orange">⚠ Configure a CAPTCHA provider to verify users and prevent automated bots.</div>
             <div style="display:flex;border-bottom:2px solid var(--border);margin-bottom:16px;">
@@ -1884,7 +1894,7 @@
       <tbody>
         <tr><td>Eliminate "Tools" menu entirely</td><td>One destination for all config — no guessing. Follows Hick's Law: fewer choices → faster decisions.</td></tr>
         <tr><td>Section labels in sidebar</td><td>12 tabs without grouping = choice overload. Labels act as visual anchors — scan group first, then drill into tabs.</td></tr>
-        <tr><td>Access & Auth at top</td><td>Most frequently configured area (80%+ support tickets relate to access). Top = highest frequency-of-use.</td></tr>
+        <tr><td>Login as own menu item</td><td>Most frequently configured area (80%+ support tickets relate to login). Dedicated menu = instant discoverability, no nesting.</td></tr>
         <tr><td>Security Headers isolated</td><td>HTTP-level protection is a different security layer than app-level auth. Mixing creates category confusion.</td></tr>
         <tr><td>General group at bottom</td><td>Matches Smush, Hummingbird, and all WPMU DEV plugins. Consistency across ecosystem = zero relearning.</td></tr>
         <tr><td>"NEW" badges on 3 tabs</td><td>Guides existing users to relocated features without disruption. Auto-expire after 30 days or first visit.</td></tr>
@@ -1911,12 +1921,22 @@
   });
 
   // Firewall inner tabs
-  document.querySelectorAll('.fw-tab').forEach(ft => {
+  document.querySelectorAll('#page-firewalls .fw-tab').forEach(ft => {
     ft.addEventListener('click', () => {
-      document.querySelectorAll('.fw-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.fw-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('#page-firewalls .fw-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('#page-firewalls .fw-content').forEach(c => c.classList.remove('active'));
       ft.classList.add('active');
       document.getElementById('fw-' + ft.dataset.fw).classList.add('active');
+    });
+  });
+
+  // Login inner tabs
+  document.querySelectorAll('#page-login .fw-tab').forEach(lt => {
+    lt.addEventListener('click', () => {
+      document.querySelectorAll('#page-login .fw-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('#page-login .fw-content').forEach(c => c.classList.remove('active'));
+      lt.classList.add('active');
+      document.getElementById('login-' + lt.dataset.login).classList.add('active');
     });
   });
 
