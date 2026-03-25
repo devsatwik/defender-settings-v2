@@ -759,72 +759,6 @@
 
 <div class="spec-page">
 
-  <!-- ===== HEADER ===== -->
-  <div class="spec-header">
-    <h1>Defender — Settings Redesign</h1>
-    <p>UX Spec & Interactive Wireframes &middot; WPMU DEV Design System</p>
-  </div>
-
-  <!-- ===== SECTION 1: IA ===== -->
-  <div class="spec-section">
-    <h3>1 — Information Architecture</h3>
-    <div class="rationale">
-      <strong>Why this grouping?</strong> Admins think in terms of <em>what they're protecting</em> (access, identity, traffic) — not the underlying technology. The four groups map to natural security workflows. Moving items from the old "Tools" menu into Settings creates <strong>one single destination</strong> for all configuration, eliminating the cognitive split between two menus.
-    </div>
-    <div class="ia-grid" style="grid-template-columns: repeat(4, 1fr);">
-      <div class="ia-group">
-        <div class="ia-group-label" style="background:#FFF6ED;border-color:#FFD6A5;color:#B35C00;">Firewalls (Left Nav)</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> AntiBot</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> Local Blocklist</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> Login Protection</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> 404 Detection</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> User Agent Banning</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> Logs</div>
-        <div class="ia-item" style="border-top:2px solid var(--blue);margin-top:4px;"><span class="dot dot-blue"></span> Mask Login Area</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> Two-Factor Auth</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> Password Rules</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> Session Protection</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> CAPTCHA</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> Settings</div>
-      </div>
-      <div class="ia-group">
-        <div class="ia-group-label">Settings → Security Policies</div>
-        <div class="ia-item"><span class="dot dot-orange"></span> Security Headers</div>
-      </div>
-      <div class="ia-group">
-        <div class="ia-group-label">Settings → Module Settings</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> Firewall Settings</div>
-        <div class="ia-item"><span class="dot dot-blue"></span> Scan Settings</div>
-        <div style="margin-top:8px;"><div class="ia-group-label">Settings → Alerts & Reports</div></div>
-        <div class="ia-item"><span class="dot dot-green"></span> Alerts</div>
-        <div class="ia-item"><span class="dot dot-green"></span> Reports</div>
-      </div>
-      <div class="ia-group">
-        <div class="ia-group-label">Settings → General</div>
-        <div class="ia-item"><span class="dot dot-purple"></span> General</div>
-        <div class="ia-item"><span class="dot dot-purple"></span> Configs</div>
-        <div class="ia-item"><span class="dot dot-purple"></span> Data & Settings</div>
-        <div class="ia-item"><span class="dot dot-purple"></span> Accessibility</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== SECTION 2: RATIONALE ===== -->
-  <div class="spec-section">
-    <h3>2 — Sidebar Tab Order & Rationale</h3>
-    <div class="rationale">
-      <strong>1. Login as its own top-level menu</strong> — login security (Mask Login, 2FA, Password Rules, Session Protection, CAPTCHA) is the #1 admin concern. Making it a dedicated menu item gives it the prominence it deserves, separate from network-level Firewall rules. Admins think: "How do users get in?" → Login.<br><br>
-      <strong>2. Security Policies (Settings)</strong> — HTTP security headers are a distinct, set-once concern. Isolated under Settings for clean separation from active firewall rules.<br><br>
-      <strong>3. Alerts & Reports split</strong> — Alerts are real-time event-driven notifications (lockouts, threats, file changes). Reports are scheduled periodic summaries (weekly scans, firewall stats). Each has its own recipients because the person who handles emergencies (CTO/DevOps) is often different from whoever reviews weekly reports (Project Manager/Client).<br><br>
-      <strong>4. General/Configs/Data/Accessibility</strong> — plugin-level meta-settings at the bottom, matching the WPMU DEV ecosystem pattern (Smush, Hummingbird, etc.).
-    </div>
-  </div>
-
-  <!-- ===== SECTION 3: WIREFRAME ===== -->
-  <div class="spec-section">
-    <h3>3 — Interactive Wireframe (Click left menu + inner tabs)</h3>
-  </div>
-
   <!-- ===== WP ADMIN WRAPPER ===== -->
   <div class="wp-admin-wrapper">
 
@@ -1883,29 +1817,6 @@
 
     </div><!-- /wp-admin-content -->
   </div><!-- /wp-admin-wrapper -->
-
-  <!-- ===== SECTION 4: DECISION TABLE ===== -->
-  <div class="spec-section" style="margin-top: 40px;">
-    <h3>4 — Design Decisions Summary</h3>
-    <table class="decision-table">
-      <thead>
-        <tr><th>Decision</th><th>Rationale</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Eliminate "Tools" menu entirely</td><td>One destination for all config — no guessing. Follows Hick's Law: fewer choices → faster decisions.</td></tr>
-        <tr><td>Section labels in sidebar</td><td>12 tabs without grouping = choice overload. Labels act as visual anchors — scan group first, then drill into tabs.</td></tr>
-        <tr><td>Login as own menu item</td><td>Most frequently configured area (80%+ support tickets relate to login). Dedicated menu = instant discoverability, no nesting.</td></tr>
-        <tr><td>Security Headers isolated</td><td>HTTP-level protection is a different security layer than app-level auth. Mixing creates category confusion.</td></tr>
-        <tr><td>General group at bottom</td><td>Matches Smush, Hummingbird, and all WPMU DEV plugins. Consistency across ecosystem = zero relearning.</td></tr>
-        <tr><td>"NEW" badges on 3 tabs</td><td>Guides existing users to relocated features without disruption. Auto-expire after 30 days or first visit.</td></tr>
-        <tr><td>Two-column content layout</td><td>Matches Smush's side-by-side pattern. Reduces scroll depth while keeping related settings visible together.</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div style="text-align: center; padding: 40px 0; color: #AAA; font-size: 12px;">
-    Defender Settings Redesign Spec · WPMU DEV · 2025
-  </div>
 
 </div><!-- /spec-page -->
 
